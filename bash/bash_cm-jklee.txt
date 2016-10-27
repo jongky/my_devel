@@ -1,0 +1,565 @@
+##########################################################################
+# Bourne Shell : Set up basic Environment                                #
+#                 : JUN, 25 2014    modified by Jong K Lee               #
+# Project         : ACCELERA Software Development Environment            #
+########################################################################## 
+#  ACCELERA Development Environment : 06/24/2014 by Jongk Lee            #
+#   1. MacBook Pro HOST  : 10.2.1.10  : jongkylee@adminstatorsmbp.sc.acceleramb.com      #
+#   2. VM LINUX Server   : 10.2.1.62  : accelera@cm-jklee.sc.acceleramb.com              #
+########################################################################## 
+
+
+
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# don't put duplicate lines in the history. See bash(1) for more options
+# ... or force ignoredups and ignorespace
+HISTCONTROL=ignoredups:ignorespace
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+if [ -r /etc/noderc ]
+then
+    . /etc/noderc
+fi
+
+NODE_PROMPT=""
+if [ -n "${NODE}" ]
+then
+    NODE_PROMPT="${NODE}"
+fi
+
+if [ -n "${NODE_ENV}" ]
+then
+    NODE_PROMPT="${NODE}@${NODE_ENV}"
+fi
+
+if [ -n "${NODE_PROMPT}" ]
+then
+    NODE_PROMPT=" (${NODE_PROMPT})"
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h${NODE_PROMPT}\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h${NODE_PROMPT}:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+#if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+#    . /etc/bash_completion
+#fi
+
+
+#####################################################################################
+# 1.  Linux Bourne Shell General Environemnt
+#####################################################################################
+umask 000   # share mode
+#umask 077 # hide all
+
+stty  sane
+stty  echoe
+stty  erase ^H
+stty  -istrip
+#stty cs8 -istrip defeucw
+set   filec
+
+#typeset PS1='[\@:\W] '
+typeset PS1='[\@] '
+#typeset PS1='[\@:\W\$] '
+LOGNAME=`/usr/bin/whoami`
+HOSTNAME=`hostname`
+typeset PS1='[$HOSTNAME:$PWD] '
+#typeset PS1='[\@:${PWD}] '
+
+
+#####################################################################################
+# 2.  ACCELERA Package Environment Variables
+#####################################################################################
+export ACC=~accelera/opt
+export MSRC=$ACC/cm
+export A=~accelera
+export K=~accelera/PKG
+export PKG=~accelera/PKG
+export IN=/opt/cm/scripts/etc/init.d
+alias cdm="cd ${MSRC}"
+source /opt/cm/setpythonpath
+
+
+#####################################################################################
+# 3.  Alias for MERU Source Tree Environment Variables
+#####################################################################################
+alias a="alias"
+
+#====================================================================================*
+# 3.1  Common Basic Aliases
+#====================================================================================*
+alias   psm="ps -ef |more"
+alias   psdb="ps -ef |grep oninit"
+alias   rc="source ~/.bash_profile"
+alias   vrc="vi ~/.bash_profile"
+alias   c=clear
+alias   rm="rm -i"
+alias   del="\rm"
+alias   lt="ls -aFlt --color=auto --show-control-char"
+alias   dir="ls -aFl |grep \"^d\"; echo \"directory only\""
+alias   ll="ls -aFl"
+alias   l="ls -F"
+alias   la="ls -aF"
+alias   h=history
+
+alias  vp="cd $HOME;vi .bashrc"
+alias  rp="cd $HOME; . .bashrc"
+alias  cdsh="cd $HOME; cd util/bash"
+
+#====================================================================================*
+# 3.2  Directory Name Aliases for Controller Side                
+#====================================================================================*
+alias   cdm="cd $MSRC"
+alias   cdk="cd $PKG"
+alias   cdnew="cd $NEW"
+alias   cddbg="cd $DBG/"
+alias   cdcm="cd /opt/cm"
+alias   cddb="cdcm; cd db"
+alias   cdmom="cdcm; cd mom"
+alias   cddbm="cdcm; cd db/migration"
+alias   cdapi="cdcm; cd mom/apis"
+alias   cdrm="cdcm; cd rrm"
+alias   cdutil="cdcm; cd utils"
+alias   cdtst="cdcm; cd tests"
+alias   cdtest="cdcm; cd tests"
+alias   cddtst="cdcm; cd tests/db"
+alias   cdweb="cdcm; cd webui"
+alias   cdetc="cdcm; cd etc/default"
+alias   cdoetc="cd /opt/cm/etc/default"
+alias   cdopt="cd /opt/cm"
+alias   cdweb="cd /var/www/webui/"
+alias   cdimg="cd /var/www/webui/ap_images"
+alias   cdlog="cd /opt/cm/var/log/celery"
+alias   cdwlog="cd /var/log/apache2"
+alias   catlog="cat /var/log/apache2/access.log"
+alias   cdini="cd /opt/cm/scripts/etc/init.d/"
+alias   cdapp="cd /var/www/webui/application"
+alias   cdphp="cd /var/www/webui/application/models/ajax"
+alias   cdmodel="cd /var/www/webui/application/models/ajax"
+alias   cdjs="cd /var/www/webui/library/javascript"
+alias   cdaj="cd /var/www/webui/application/models/ajax"
+alias   cdcon="cd /var/www/webui/application/controllers"
+alias   cdview="cd /var/www/webui/application/views"
+
+alias   cms="/opt/cm/bin/cm status"
+alias   cmver="/opt/cm/bin/cm --version"
+alias   cmrest="/opt/cm/bin/cm restart"
+alias   cmst="/opt/cm/bin/cm status"
+alias   setp="source /opt/cm/setpythonpath"
+alias   arest="sudo service apache2 restart"
+
+
+
+#####################################################################################
+# 4.  ACCELERA Remote Server(SSH)  Environment Variables
+#####################################################################################
+alias gcap="git clone git@git.sc.acceleramb.com:accelera/cloud/ap"
+alias gccm="git clone git@git.sc.acceleramb.com:accelera/cloud/cm"
+alias sshdb="ssh mongo.sc.acceleramb.com"
+alias sshap="ssh root@10.2.1.40"
+alias sshap1="ssh root@10.9.0.49"
+alias sshap2="ssh root@10.9.0.49"
+alias sshqa="ssh accelera@webui.qa.aws.acceleramb.com"
+alias l2="ssh-copy-id accelera@l2"
+alias sshl2="ssh l2"
+alias sshk2="ssh k2"
+alias sshm2="ssh m2"
+
+
+#####################################################################################
+# 5.  Utility Functions for Easy Use          
+#####################################################################################
+
+#====================================================================================*
+# 5.1  Prompt() 
+# usage prompt message
+# Result is in INPUT
+#====================================================================================*
+prompt()
+{
+    while true
+    do
+        echo -n "$1, or q to quit: "
+        read -e INPUT
+        [ "$INPUT" ] || continue
+        [ `echo $INPUT | wc -L` -gt 128 ] && {
+            echo "Error: Maximum line size exceeded."
+            continue
+        }
+        echo $INPUT | grep '^[qQ]$' >/dev/null 2>&1 && {
+            [ "$2" = "noq" ] && {
+                return 1
+            }
+            exit 0
+        }
+        echo $INPUT | grep '^[qQ][uU][iI][tT]$' >/dev/null 2>&1 && {
+            [ "$2" = "noq" ] && {
+                return 1
+            }
+            exit 0
+        }
+        return 0
+    done
+}
+
+#====================================================================================*
+# 5.2  Restart any specific Process 
+#====================================================================================*
+re()
+{
+    PROC_NAME=$1
+    echo "@@@ ===> Process[$PROC_NAME] will be restarted now !!!!"
+    /opt/cm/scripts/etc/init.d/$PROC_NAME restart
+    sleep 5
+    /opt/cm/scripts/etc/init.d/$PROC_NAME status
+}
+
+#====================================================================================*
+# 5.2  Restart any specific Process 
+#====================================================================================*
+rest()
+{
+    prompt "Enter Process Name >> "
+    PROC_NAME=$INPUT
+    echo "@@@ ===> Process[$PROC_NAME] will be restarted now !!!!"
+    /opt/cm/scripts/etc/init.d/$PROC_NAME restart
+}
+
+#====================================================================================*
+# 5.3  Show status for any specific Process 
+#====================================================================================*
+stap()
+{
+    prompt "Enter Process Name >> "
+    PROC_NAME=$INPUT
+    echo "@@@ ===> The status of Process[$PROC_NAME] will be this !!!!"
+    /opt/cm/scripts/etc/init.d/$PROC_NAME status
+}
+
+#====================================================================================*
+# 5.4  Run testnoses test cases
+#====================================================================================*
+nt()
+{
+    PROC_NAME=$1
+    echo "@@@ ===> This will start NoseTests for $PROC_NAME ----------->"
+    # nosetests -vs ./$PROC_NAME --verbose --with-tissue --with-cov
+    nosetests -vs ./$PROC_NAME
+}
+
+#====================================================================================*
+# 5.5  Run DB Migration : for Image Upgrade test cases
+#====================================================================================*
+dbm()
+{
+    cddbm;
+    PROC_NAME=$1
+    echo "@@@ ===> This will migrate Image for $PROC_NAME ----------->"
+    python b133_plus_migrate_db.py  $PROC_NAME
+}
+
+#====================================================================================*
+# 5.5  Copy AP Images from Jenkins and Insert it to software_image db collection
+#====================================================================================*
+copyap()
+{
+    echo "[1] Integ AP Image[BOD_#308] : 1.5.2-cb8e875+mods-dev-WC-3415-4569-4474"
+    echo "[2] Integ AP Image[BOD_#303] : 1.5.1-a577491+mods-dev-WC-3415-4569-4474"
+    echo "[3] Integ AP Image[BOD_#300] : 1.5.0-853c035+mods-dev-WC-3415-4569"
+    echo "[4] Integ AP Image[BOD_#301] : 1.5.0-6aac9fc+mods-dev-WC-3415-4569-4474"
+    echo "[5] Integ AP Image[BOD_#292] : 1.4.3-ff84254+mods-dev-WC-3415-4569"
+
+    echo ""
+    prompt "Enter Number to copy AP images from Jenkins >> "
+    PROC_NAME=$INPUT
+    echo "@@@ ===> This will copy AP images from Jekins Build Server !!!!"
+    cd /opt/cm/utils
+    case "$PROC_NAME" in
+
+        1)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/308/artifact/images/openwrt-os-WNDAP360-lab-ap-squashfs-1.5.2-cb8e875+mods-dev-WC-3415-4569-4474.img"}'        
+        ;;
+
+        2)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/303/artifact/images/openwrt-os-WNDAP360-lab-ap-squashfs-1.5.1-a577491+mods-dev-WC-3415-4569-4474.img"}'        
+        ;;
+
+        3)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/300/artifact/images/openwrt-os-WNDAP360-lab-ap-squashfs-1.5.0-853c035+mods-dev-WC-3415-4569.img"}'        
+        ;;
+
+        4)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/301/artifact/images/openwrt-os-WNDAP360-lab-ap-squashfs-1.5.0-6aac9fc+mods-dev-WC-3415-4569-4474.img"}'        
+        ;;
+
+        5)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/292/artifact/images/openwrt-os-UNIFI-APPRO-lab-ap-squashfs-1.4.3-ff84254+mods-dev-WC-3415-4569.img"}'        
+        ;;
+
+        *)
+        echo $"Usage: 1 -- 12"
+        ;;
+    esac
+    echo "@@@ ===> Copying AP images from Jenkins is finished now !!!!"  
+}
+
+#====================================================================================*
+# 5.5  Copy AP Images from Jenkins and Insert it to software_image db collection
+#====================================================================================*
+old_copyap()
+{
+    echo "[1] Integ AP Image[BOD_#303] : 1.5.1-a577491+mods-dev-WC-3415-4569-4474"
+    echo "[2] Integ AP Image[BOD_#300] : 1.5.0-853c035+mods-dev-WC-3415-4569"
+    echo "[3] Integ AP Image[BOD_#301] : 1.5.0-6aac9fc+mods-dev-WC-3415-4569-4474"
+    echo "[4] Integ AP Image[BOD_#292] : 1.4.3-ff84254+mods-dev-WC-3415-4569"
+    echo "[5] Integ AP Image[BOD_#290] : 1.4.3-e30cc2b+mods-dev-WC-3415-4569"
+    echo "[6] Integ AP Image[BOD_#293] : 1.4.3-67783c0+mods-dev-WC-3415-4569"
+    echo "[7] AP Image(Three APs) : 1.4.3-6e64dce-51"
+    echo "[8] AP Image(Three APs) : 1.3.1-ec63c21-35"
+    echo "[9] AP Image(Three APs) : 1.3.1-qa-7feebc0-dev-WC-3539"
+    echo "[10] AP QoE Image : 1.4.1-9409caa-WC-3089-2"
+    echo "[11] AP RRM Image : 1.4.1-qa-3b1b846+mods-dev-WC-3386"
+    echo "[12] AP RRM Image : 1.4.3-89b6081+mods-dev-WC-3415"
+
+    echo ""
+    prompt "Enter Number to copy AP images from Jenkins >> "
+    PROC_NAME=$INPUT
+    echo "@@@ ===> This will copy AP images from Jekins Build Server !!!!"
+    cd /opt/cm/utils
+    case "$PROC_NAME" in
+
+        1)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/306/artifact/images/openwrt-os-WNDAP360-lab-ap-squashfs-1.5.2-f575fa1+mods-dev-WC-3415-4569-4474.img"}'        
+        ;;
+
+        2)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/303/artifact/images/openwrt-os-WNDAP360-lab-ap-squashfs-1.5.1-a577491+mods-dev-WC-3415-4569-4474.img"}'        
+        ;;
+
+        3)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/300/artifact/images/openwrt-os-WNDAP360-lab-ap-squashfs-1.5.0-853c035+mods-dev-WC-3415-4569.img"}'        
+        ;;
+
+        4)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/301/artifact/images/openwrt-os-WNDAP360-lab-ap-squashfs-1.5.0-6aac9fc+mods-dev-WC-3415-4569-4474.img"}'        
+        ;;
+
+        5)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/292/artifact/images/openwrt-os-UNIFI-APPRO-lab-ap-squashfs-1.4.3-ff84254+mods-dev-WC-3415-4569.img"}'        
+        ;;
+
+        6)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/290/artifact/images/openwrt-os-UNIFI-APPRO-lab-ap-squashfs-1.4.3-e30cc2b+mods-dev-WC-3415-4569.img"}'        
+        ;;
+
+        7)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/293/artifact/images/openwrt-os-UNIFI-APPRO-lab-ap-squashfs-1.4.3-67783c0+mods-dev-WC-3415-4569.img"}'        
+        ;;
+
+        7)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.ap/51/artifact/images/openwrt-os-WNDAP360-lab-ap-squashfs-1.4.3-6e64dce-51.img"}'        
+        ;;
+
+        8)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.ap/35/artifact/images/openwrt-os-UNIFI-APPRO-lab-ap-squashfs-1.3.1-ec63c21-35.img"}'        
+        ;;
+
+        9)
+        python copy_image.py '{"location":"http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/189/artifact/images/openwrt-os-WNDAP360-lab-ap-squashfs-1.3.1-7feebc0-dev-WC-3539-merge-swap.img"}'        
+        ;;
+
+        10) 
+        python copy_image.py '{"location": "http://jenkins.sc.acceleramb.com/job/v1.2.1.ap/32/artifact/images/openwrt-os-WNDAP360-lab-ap-squashfs-1.3.1-9409caa-32.img"}'
+        ;;
+
+        11) 
+        python copy_image.py '{"location": "http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/254/artifact/images/openwrt-os-WNDAP360-lab-ap-qa-squashfs-1.4.1-qa-3b1b846+mods-dev-WC-3386.img"}'
+        ;;
+
+        12) 
+        python copy_image.py '{"location": "http://jenkins.sc.acceleramb.com/job/v1.2.1.bod.ap/275/artifact/images/openwrt-os-WNDAP360-lab-ap-squashfs-1.4.3-89b6081+mods-dev-WC-3415.img"}'
+        ;;
+
+        *)
+        echo $"Usage: 1 -- 12"
+        ;;
+    esac
+    echo "@@@ ===> Copying AP images from Jenkins is finished now !!!!"  
+}
+
+#====================================================================================*
+# 5.6  Run AP Upgrade for AP per Location
+#====================================================================================*
+upgap()
+{
+    echo "[1] Upgrade AP Image :  Upgrade Now "
+    echo "[2] Upgrade AP Image :  Schedule Upgrade with  "
+    prompt "Enter Number to run AP Upgrade >> "
+    PROC_NAME=$INPUT
+    echo "@@@ ===> This will run AP image upgrade per Location !!!!"
+    case "$PROC_NAME" in
+        1)
+        cdapi; python image_upgrade_api.py create_image_upgrade '{"customer_id":"53d82a905f1d2b0b27730b59", "location_id":"53d82af05f1d2b0b4bae5263", "upgrade_time":"2014-12-31T08:00:00.000Z", "upgrade_method": "now", "timezone":"+00:00"}'
+        ;;
+
+        2) 
+         cdapi; python image_upgrade_api.py create_image_upgrade '{"customer_id":"53d82a905f1d2b0b27730b59", "location_id":"53d82af05f1d2b0b4bae5263", "upgrade_time":"2014-12-31T08:00:00.000Z", "upgrade_method": "scheduled", "timezone":"+00:00"}'
+        ;;
+
+        3)
+        cdapi; python image_upgrade_api.py create_image_upgrade '{"customer_id":"53d82a905f1d2b0b27730b59", "location_id":"53d82af05f1d2b0b4bae5263", "upgrade_time":"now", "timezone":"+07:00"}'
+        ;;
+
+        4) 
+        cdapi; python image_upgrade_api.py create_image_upgrade '{"customer_id":"53d82a905f1d2b0b27730b59", "location_id":"53d82af05f1d2b0b4bae5263", "upgrade_time":”2014-12-31T08:00:00.000Z", “timezone”:”+07:00"}' 
+        ;;
+
+        *)
+        echo $"Usage: 1 or 2 or 3"
+        ;;
+    esac
+
+    echo "@@@ ===> Upgrading AP images is finished now !!!!"  
+}
+
+#====================================================================================*
+# 5.6  Run AP Upgrade for AP Image1 and 2 
+#====================================================================================*
+upg-ap()
+{
+    echo "[1] Buffalo AP : 492bd78 "
+    echo "[2] Buffalo AP : 4d5fa56 "
+    echo "[3] Buffalo AP : f97e1a0 "
+    prompt "Enter Number to upgrade the AP[10-6f-3f-e8-78-d8] >> "
+    PROC_NAME=$INPUT
+    echo "@@@ ===> This will run upgrade_ap_image for AP[$PROC_NAME] !!!!"
+    cd /opt/cm/utils
+    case "$PROC_NAME" in
+        1)
+        python upgrade_ap_image.py 10-6f-3f-e8-78-d8 http://10.2.1.62/ap_images/WZRHPAG300H/openwrt-os-WZRHPAG300H-lab-ap-qa-squashfs-1.3-qa-492bd78-dev-WC-2608.img 411c3a49b257a8b7d9e27d8c93f59f80
+        ;;
+
+        2) 
+        python upgrade_ap_image.py 10-6f-3f-e8-78-d8 http://10.2.1.62/ap_images/WZRHPAG300H/openwrt-os-WZRHPAG300H-lab-ap-qa-squashfs-1.3-qa-4d5fa56-dev-WC-2608.img 76b381c19a2ba5c1a6eeee2078cfe009
+        ;;
+
+        3) 
+        python upgrade_ap_image.py 10-6f-3f-e8-78-d8 http://10.2.1.62/ap_images/WZRHPAG300H/openwrt-os-WZRHPAG300H-lab-ap-qa-squashfs-1.3-qa-f97e1a0-dev-WC-2465.img 70f40e4cb9edc9a78c24f1a0c669f769
+        ;;
+
+        *)
+        echo $"Usage: 1 or 2 or 3"
+        ;;
+    esac
+    echo "@@@ ===> Upgrading AP Scripter is finished now !!!!"  
+}
+
+#====================================================================================*
+# 5.7  Create a file "kkk" and tail
+#====================================================================================*
+kkk()
+{
+    echo "@@@ ===> This will create a file(kkk) and tail it !!!!"
+    cd /opt/cm/var/log/celery
+    rm -rf kkk
+    touch kkk
+    chmod 777 kkk
+    tail -f kkk
+}
+
+#====================================================================================*
+# 5.8  Kill upgrade_ap process 
+#====================================================================================*
+ku()
+{
+    upgrade_pid=`ps -aef | grep "python upgrade_ap" | awk '{print $2}'`
+    echo "@@@ ===> This will kill "upgrade_ap" PID[$upgrade_pid] !!!!"
+    kill -9 $upgrade_pid
+}

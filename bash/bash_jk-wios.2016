@@ -1,0 +1,1039 @@
+##########################################################################
+# Bourne Shell : Set up basic Environment                                #
+#                 : December, 16 2015    modified by Jong K Lee          #
+# Project         : My Development Environment                           #
+########################################################################## 
+#  MY Development Environment : 12/16/2015 by Jongky Lee                 #
+#   1. Notebook HOST : 157.235.90.34                                     #
+#   2. UBUNTU LINUX Server : 157.235.91.230                              #
+########################################################################## 
+
+#####################################################################################
+# 1.  Linux Bourne Shell General Environemnt
+#####################################################################################
+umask 000   # share mode
+#umask 077 # hide all
+
+# stty  sane
+# stty  echoe
+# stty  erase ^H
+# stty  -istrip
+# stty cs8 -istrip defeucw
+set   filec
+
+typeset PS1='[\@:\W] '
+#typeset PS1='[\@:\W\$] '
+LOGNAME=`/usr/bin/whoami`
+typeset PS1='[${PWD}] '
+#typeset PS1='[\@:${PWD}] '
+
+PATH=$PATH:/usr/local/bin/:/bin/:/usr/bin/:/sbin:/usr/sbin/
+export PATH
+
+#========================================================================
+# 1.1  Alias for Common Linux Utility
+#========================================================================
+alias  a="alias"
+alias  psm="ps -ef |more"
+alias  psdb="ps -ef |grep oninit"
+alias  rc="source ~/.bash_profile"
+alias  vrc="vi ~/.bash_profile"
+alias  c=clear
+alias  rm="rm -i"
+alias  del="\rm"
+alias  lt="ls -aFlt --color=auto --show-control-char"
+alias  dir="ls -aFl |grep \"^d\"; echo rp\"directory only\""
+alias  ll="ls -aFl"
+alias  l="ls -F"
+alias  la="ls -aF"
+alias  h=history
+alias  ns="netstat -nat | grep 27017"
+alias  nsc="netstat -nat | grep 27017 | wc -l"
+alias  ns7999="netstat -nat | grep 7999"
+alias  nsp='nslookup wwwgate0.mot.com'
+alias  nss='nslookup netvision.sj.symbol.com'
+alias  cpr='cd /etc; sudo cp $JK_BU/conf/resolv.conf .'
+
+#========================================================================
+# 1.2  JK Test Server IP Address Environemnt
+#========================================================================
+export JK_LINUX=157.235.91.54
+export JK_VM_CLOUD=157.235.91.50
+export JK_CLOUD_AP1=157.235.91.98
+export JK_CLOUD_AP2=157.235.91.164
+export JK_CLOUD_AP3=157.235.91.24
+
+export JK_LINUX2=192.168.0.100
+export JK_WIOSIOS_FTP=172.20.15.248
+# Userid= www, password = apache, Images/WiNG5.4.0.0)
+
+export JK_NUXI=192.168.0.1
+export JK_VX=157.235.91.45
+export JK_RFS=192.168.0.146
+export JK_NUXI_AP1=192.168.0.133
+export JK_NUXI_AP2=192.168.0.141
+export JK_NUXI_AP3=192.168.0.138
+
+export JK_KUMAR_TEST=157.235.92.95
+export JK_QA_TEST1=172.20.15.17
+export JK_WING=$JK_VM_CLOUD
+export JK_MARTSIM=157.235.91.213
+export JK_NUXIM=/usr/scripts/mart
+
+
+#####################################################################################
+# 2.  WIOS Package Environment Variables
+#####################################################################################
+# export TOOLS_INSTALL_PATH=/mnt/ssd/opt/wios
+
+export JK_TRUNK=$JK_WIOS
+export JK_SRC=$JK_WIOS/src
+export JK_INC=$JK_WIOS/src/inc
+export JK_CLOUD=$JK_WIOS/src/cloud
+export JK_WIOSC=/wingcloud
+export JK_APSSM=$HOME/wios/src/sys/ssm
+export JK_OBJ=$JK_WIOS/obj
+export JK_OUT=$JK_WIOS/out
+export JK_PLIB=$JK_WIOS/out/nuxi/root/usr/lib/python2.7/site-packages
+export JK_ALMDOUT=$JK_WIOS/out/nuxi/root/usr/lib/python2.7/site-packages/alarmd
+export JK_COREOUT=$JK_WIOS/out/birch/root/usr/lib/python2.7/site-packages/cfgd/core
+
+export JK_BIN=$W/out/wingcloud/repository/binary
+export JK_ETC=$W/src/patches/wingcloud/data/etc
+export JK_INI_ALM=$W/src/sys/skel_fs/alarm/etc/init.d
+export JK_FS=$W/src/sys/skel_fs/
+export JK_WIOSETC=/etc
+export JK_WIOSINI=/etc/init.d
+
+export JK_SSD=/mnt/ssd
+export JK_BU=/mnt/ssd/my_backup/
+export JK_MYCODE=/mnt/ssd/my_backup/mycode
+export JK_BW=$JK_BU/wios
+export JK_LOG=$JK_BU/log/logstash
+export JK_CFG=/wingcloud/cloudcfg
+export JK_NODE=/wingcloud/cloudcfg/node_modules
+export JK_DASH=/wingcloud/cloudcfg/node_modules/dashboard_server
+
+
+alias  cdk="cd ${JK_PKG}"
+alias  cds="cd ${JK_SSD}"
+alias  cdbu="cd ${JK_BU}; pwd; ls -al"
+alias  cdopt="cd ${JK_TOOLS_INSTALL_PATH}; pwd; ls"
+alias  cdbw="cd ${JK_BW}; pwd; ls -al"
+alias  cdimg="cd ${JK_BU}/img; pwd; ls -al"
+alias  cdmy="cd ${JK_MYCODE}; pwd; ls -al"
+alias  cdpy="cd ${JK_MYCODE}/python; pwd; ls -al" 
+alias  cdnode="cd ${JK_MYCODE}/node; pwd; ls -al" 
+alias  cdlog="cd ${JK_LOG}; pwd; ls -al"
+alias  cdbug="cd ${JK_BUG}; pwd; ls -al"
+alias  cdssd="cd ${JK_SSD}; pwd; ls -al"
+alias  cddbg="cd ${JK_DEBUG}; pwd; ls -al"
+alias  cdalmo="cd ${JK_ALMDOUT}; pwd; ls -al"
+alias  startv="virtualbox &"
+alias  cdalmini="cd ${JK_INI_ALM}; pwd; ls -al"
+alias  cdfs="cd ${JK_FS}; pwd; ls -al"
+alias  cdcoreo="cd ${JK_COREOUT}; pwd; ls -al"
+alias  cdsw="cd ${JK_BU}/tools; pwd; ls -al"
+
+ 
+#####################################################################################
+# 3.  Alias for Z Source Tree Environment Variables
+#####################################################################################
+
+#====================================================================================*
+# 3.1  Common Basic JK-Linux Aliases
+#====================================================================================*
+
+alias  vp="cd $HOME;vi .bashrc"
+alias  rp="export JK_WIOS=/home/jongky/wios; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile"
+alias  rpw="export JK_WIOS=/mnt/ssd/wios; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cdw"
+alias  cdsh="cd $HOME; cd util/bash"
+alias  rpp="export JK_WIOS=/home/jongky/wios_58pinacle; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /home/jongky/wios_58pinacle"
+alias  rp582="export JK_WIOS=/home/jongky/wios_rel582; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /home/jongky/wios_rel582"
+alias  rpc="export JK_WIOS=/home/jongky/wios_58cedar; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /home/jongky/wios_58cedar"
+alias  rpm="export JK_WIOS=/home/jongky/wios_58pinacle; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashxlrzvalnrc;. .bashrc; cp .bashrc .bash_profile; cd /home/jongky/wios_58pinacle"
+alias  rp18="export JK_WIOS=/mnt/ssd/wios_sprint18; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /mnt/ssd/wios_sprint18"
+
+
+#====================================================================================*
+# 3.2  : Common : wios, wingcloud : BUILD Environment Variables
+#====================================================================================*
+alias  cdw="cd ${JK_WIOS}"
+alias  cdwc="cd ${JK_WIOSC}"
+alias  cdsrc="cd ${JK_SRC}"
+alias  cdinc="cd ${JK_INC}"
+
+alias  cdout="cd ${JK_OUT}; pwd; ls -al"
+alias  cdoutx="cd ${JK_OUT}/nuxi; pwd; ls -al"
+alias  cdplib="cd ${JK_PLIB}; pwd; ls -al"
+alias  cdobj="cd ${JK_OBJ}; pwd; ls -al"
+alias  cdbin="cd ${JK_BIN}; pwd; ls -al"
+alias  cdmk="cd $JK_WIOS/mk"
+alias  cdboot="cd $JK_WIOS/src/boot/bootos"
+alias  cdui="cdw; cd src/ui; pwd; ls -al"
+alias  cdhtml5="cd ${JK_SRC}/ui/html5"
+alias  cdtool="cd $JK_WIOS/tools/bin"
+alias  cdetc="cd $JK_ETC; pwd; ls -al"
+alias  cdini="cd $JK_INI; pwd; ls -al"
+alias  cdwetc="cd $JK_WETC; pwd; ls -al"
+alias  cdwini="cd $JK_WINI; pwd; ls -al"
+alias  cdyang="cd ${JK_SRC}/sys/cfgd/schema; pwd; ls -al"
+alias  cdmib="cd ${JK_OUT}/nuxi/mibs; pwd; ls -al"
+alias  cdtab="cd ${JK_SRC}/sys/skel_fs/root/etc/wios/logtab; pwd; ls -al"
+alias  cdev="cd ${JK_SRC}/sys/skel_fs/root/etc/wios/logtab; pwd; ls -al"
+
+#====================================================================================*
+# 3.3  : MART Aliases : svn (Sub Version) for WiOS (Z) : /wios/src/sys/mart
+#====================================================================================*
+export JK_M=$JK_WIOS/src/sys/mart
+export JK_SYS=$JK_WIOS/src/sys
+export JK_ALM=$JK_WIOS/src/sys/mart/alarm
+export JK_REPORTD=$JK_WIOS/src/sys/nsightd
+export JK_ALMD=$JK_WIOS/src/sys/alarmd
+export JK_MARTUI=$JK_WIOS/src/ui/html5/mart
+export JK_NODE_PKG=$JK_WIOS/src/sys/3rdparty/node-mart-packages
+export JK_NPM=$JK_WIOS/src/sys/3rdparty/node-mart-packages
+
+export JK_WIOSM=/wingcloud/usr/scripts/mart
+export JK_WIOSMS=/wingcloud/usr/scripts/mart/martsim
+export JK_WIOSWW=/wingcloud/web/htdocs/MartUI
+export JK_WIOSMU=/wingcloud/web/htdocs/MartUI
+
+alias  cdm="cd $JK_M; pwd; ls -al"
+alias  cdsys="cd $JK_SYS; pwd; ls -al"
+alias  cdpass="cd $JK_WIOS/tools/WATTS/tools; pwd; ls -al"
+alias  cd3rd="cd $JK_SYS/3rdparty/; pwd; ls -al"
+alias  cdsnmp="cd $JK_SYS/3rdparty/net-snmp; pwd; ls -al"
+alias  cdalm="cd $JK_ALM; pwd; ls -al"
+alias  cdalmd="cd $JK_ALMD; pwd; ls -al"
+alias  cdmu="cd $JK_MARTUI; pwd; ls -al"
+alias  cdnpm="cd $JK_NPM; pwd; ls -al"
+alias  cdwm="cd $JK_WIOSM; pwd; ls -al"
+alias  cdwmu="cd $JK_WIOSMU; pwd; ls -al"
+alias  cdmui="cd $JK_MARTUI; pwd; ls -al"
+alias  cdwww="cd ${JK_WIOSWW}"
+alias  cdnpm="cd ${JK_NODE_PKG}"
+alias  cdrpt="cd ${JK_REPORTD}; ls -al"
+alias  cdpci="cd ${JK_REPORTD}/reports; ls -al"
+
+alias  cdsim="cdw; cd src/sys/mart/martsim; pwd; ls -al"
+alias  cdmo="cdw; cd out/$JK_TARGET/root/usr/scripts/mart; pwd; ls -al"
+alias  cdmos="cdw; cd out/$JK_TARGET/root/usr/scripts/mart/martsim; pwd; ls -al"
+alias  cdssmo="cdw; cd out/birch/root/usr/sbin; pwd; ls -al"
+
+alias  cdmsim="cdw; cd $W/out/martsim/root/usr/scripts/mart/martsim; pwd; ls -al"
+alias  msim="cdmsim; sh martsim.sh"
+alias  killsim="pkill martsim; pkill mart_client"
+
+alias  cpm="cdw; cd out/$JK_TARGET/root/usr/scripts/mart; sudo cp nsight_server.js $WM"
+alias  cpc="cdw; cd out/$JK_TARGET/root/usr/scripts/mart; sudo cp configuration.js $WM"
+
+
+alias  cdview="cd $JK_MU/app/view; pwd; ls -al"
+alias  cdmain="cd $JK_MU/app/view/main; pwd; ls -al"
+alias  cdcon="cd $JK_MU/app/view/config; pwd; ls -al"
+alias  cdmodel="cd $JK_MU/app/model; pwd; ls -al"
+alias  cdstore="cd $JK_MU/app/store; pwd; ls -al"
+alias  cddata="cd $JK_MU/resources/data; pwd; ls -al"
+alias  cdtools="cd $JK_MU/app/view/tools; pwd; ls -al"
+
+
+alias  cdwout="cdw; cd out/$JK_TARGET/root; pwd; ls -al"
+alias  cdwui="cdw; cd out/$JK_TARGET/root/web/htdocs/MartUI; pwd; ls -al"
+alias  cddo="cdw; cd src/patches/$JK_TARGET; pwd; ls"
+alias  cdmout="cdmui; cd build/production/MartUI; pwd; ls -al"
+alias  cpapp="cdmout; sudo cp app.js $JK_WIOSMU; echo $JK_WIOSMU; ls -al $JK_WIOSMU; cdmui"
+alias  cpmu="cdmout; sudo cp -R * $JK_WIOSMU; echo $JK_WIOSMU; ls -al $JK_WIOSMU;"
+
+
+#====================================================================================*
+# 3.4  ConfigMgr Aliases : /wios/src/cloud/
+#====================================================================================*
+export JK_CM=$JK_WIOS/src/cloud
+export JK_CMDB=$JK_WIOS/src/cloud/cloud_db
+export JK_CMUTIL=$JK_WIOS/src/cloud/cloud_utils
+export JK_CMDS=$JK_WIOS/src/cloud/dashboard_server
+export JK_CMMS=$JK_WIOS/src/cloud/management_server/
+export JK_CMCM=$JK_WIOS/src/cloud/connection_manager/
+export JK_CMU=$JK_WIOS/src/ui/html5/Dashboard_UI
+export JK_WIOSCM=/wingcloud/cloudcfg/node_modules
+
+export JK_WIOSCMUTIL=/wingcloud/cloudcfg/node_modules/cloud_utils
+export JK_WIOSCMU=/wingcloud/cloudcfg/node_modules/cloud_utils
+export JK_WIOSCDS=/wingcloud/cloudcfg/node_modules/dashboard_server
+export JK_WIOSCMS=/wingcloud/cloudcfg/node_modules/management_server
+export JK_WIOSCCM=/wingcloud/cloudcfg/node_modules/connection_manager
+export JK_WIOSCRS=/wingcloud/cloudcfg/node_modules/dashboard_server/remote_shell/
+
+alias  cdcm="cd $JK_CM; pwd; ls -al"
+alias  cdcmu="cd $JK_CMU; pwd; ls -al"
+alias  cdcmdb="cd $JK_CMDB; pwd; ls -al"
+alias  cdcmds="cd $JK_CMDS; pwd; ls -al"
+alias  cdcmutil="cd $JK_CMUTIL; pwd; ls -al"
+alias  cdwcm="cd $JK_WIOSCM; pwd; ls -al"
+alias  cdwcmu="cd $JK_WIOSCMU; pwd; ls -al"
+alias  cdcmrs="cdw; cd src/cloud/dashboard_server/remote_shell; pwd; ls -al"
+
+alias  cdcmds="cd $JK_CM/dashboard_server; pwd; ls -al"
+alias  cdcmms="cd $JK_CM/management_server; pwd; ls -al"
+alias  cdcmcm="cd $JK_CM/connection_manager; pwd; ls -al"
+alias  cdcmcc="cd $JK_CM/cloud_config; pwd; ls -al"
+
+alias  cddapp="cdw; cd src/ui/html5/Dashboard_UI/src/app; pwd; ls -al"
+alias  cddmain="cdw; cd src/ui/html5/Dashboard_UI/src/app/view/main; pwd; ls -al"
+alias  cddmodel="cdw; cd src/ui/html5/Dashboard_UI/src/app/model; pwd; ls -al"
+alias  cddstore="cdw; cd src/ui/html5/Dashboard_UI/src/app/store; pwd; ls -al"
+alias  cdddata="cdw; cd src/ui/html5/Dashboard_UI/src/resources/data; pwd; ls -al"
+
+
+#====================================================================================*
+# 3.5  : SVN, Compile Aliases : svn (Sub Version) for WiOS (ZEBRA)
+#====================================================================================*
+alias  sync_wios="svn co svn://netvision.sj.symbol.com/wios/trunk wios"
+alias  sync_581="svn co svn://netvision.sj.symbol.com/wios/branches2/rel581_trunk wios_581"
+alias  sync_582="svn co svn://netvision.sj.symbol.com/wios/branches2/rel582_release wios_rel582"
+
+alias  sync_58p="svn co svn://netvision.sj.symbol.com/wios/branches2/rel58_pinnacles wios_58p"
+alias  sync_58c="svn co svn://netvision.sj.symbol.com/wios/branches2/rel58_cedar wios_58cedar"
+alias  sync_58pm="svn co svn://netvision.sj.symbol.com/wios/branches2/rel58_pinnacles wios_58pinacle"
+alias  sync_cloud="svn co svn://netvision.sj.symbol.com/wios/branches2/cloud_release/release_sprint18 wios_sprint18"
+
+
+alias  mktool="cdtool; pwd; ls -al;sudo sh ./prepare_build_machine-debian.sh jongky"
+alias  mknuxi="cdw; make TARGET=nuxi"
+alias  mkx="make TARGET=nuxi"
+alias  mkx0="make TARGET=nuxi PARALLEL=0"
+alias  mkvx="make TARGET=nuxi VM_MODE=guest"
+alias  mkrfs="make TARGET=gs1"
+alias  mkc="cdw; make -f Makefile-wingcloud" 
+alias  mkcloud="cdw; make -f Makefile-wingcloud" 
+alias  mkdoit="cdw; cd src/patches/wingcloud; pwd; ./doit" 
+alias  mkap="make TARGET=birch"
+alias  mkap="make TARGET=birch PARALLEL=0"
+alias  mkapc="make TARGET=birch CLOUD=1"
+alias  mksim="make TARGET=martsim"
+
+alias  mkui="cdmui; pwd; sencha app build production;"
+alias  mkuic="cdmui; pwd; sencha config -p build.options=\"WiNG_CONFIG:true\" then app build production;"
+alias  cleanui="cdmui; cd build; rm -rf *; ls -al"
+alias  mkopt="cdmui; pwd; sencha config -p build.options=\"WiNG_CONFIG:true\" then app build production"
+alias  mkdbg="cdmui; pwd; sencha app build debug"
+alias  cpdbg="cdmui; cd debug; sudo cp app.js $WMU; ls -al $WMU"
+alias  m="cdmui; pwd; sencha config -p build.options=\"WiNG_CONFIG:true\" then app build production; sleep 10; cpapp"
+
+
+
+#====================================================================================*
+# 3.6  Additional Developer Aliases : WingCloud start/stop for wios (ZEBRA)
+#====================================================================================*
+alias  wstop="sudo /etc/init.d/wingcloud stop"
+alias  wstart="sudo rm -rf /var/lib/mongodbmongod.lock; sudo /etc/init.d/wingcloud start"
+alias  tm="cd /var/log; tail -f /var/log/mart_server.log"
+
+
+#====================================================================================*
+# 3.4  TAIL Aliases : Handling Mart_server 
+#====================================================================================*
+alias  tm="tail -f /var/log/wingcloud/nsight_server.log"
+alias  tcm="tail -f /var/log/wingcloud/connection_manager_server"
+alias  tdm="tail -f /var/log/wingcloud/device_management_server"
+alias  tds="tail -f /var/log/wingcloud/dashboard_server"
+alias  tmo="tail -f /var/log/wingcloud/mongod.log"
+
+alias  catm="tail -100 /var/log/wingcloud/nsight_server.log"
+alias  catcm="tail -100 /var/log/wingcloud/connection_manager_server"
+alias  catdm="tail -100 /var/log/wingcloud/device_management_server"
+alias  catds="tail -100 /var/log/wingcloud/dashboard_server"
+alias  catmo="tail -100 /var/log/wingcloud/mongod.log"
+
+
+#====================================================================================*
+# 3.5  NUXI Aliases : Handling NUXI Mart_server 
+#====================================================================================*
+alias  cdnm='cd $JK_NUXIM; ls'
+alias  scpns='scp jongky@192.168.0.100:/home/jongky/wios_581/out/nuxi/root/usr/scripts/mart/nsight_server.js .'
+alias  scpa="cd /home/jongky/wios_581/src/ui/html5/mart/build/production; scp -r MartUI/app.js  root@$JK_NUXI:/web/htdocs/MartUI/app.js"
+alias  scpui="cd /home/jongky/wios_58pinacle/src/ui/html5/mart/build/production; scp -r MartUI root@$JK_NUXI:/web/htdocs/."
+alias  scpuiapp="cd /home/jongky/wios_58pinacle/src/ui/html5/mart/build/production/MartUI; scp app.js root@$JK_NUXI:/web/htdocs/MartUI/."
+
+alias  scpcui="cd /mnt/ssd/wios_sprint18/src/ui/html5/mart/build/production; scp -r MartUI jongky@$JK_VM_CLOUD:/wingcloud/web/htdocs/."
+alias  scpcapp="cd /home/jongky/wios_sprint18/src/ui/html5/mart/build/production/MartUI; scp app.js jongky@$JK_VM_CLOUD:/wingcloud/web/htdocs/MartUI/."
+
+
+#====================================================================================*
+# 3.7  Additional Developer Aliases : AP Access (ZEBRA)
+#====================================================================================*
+export JK_SYS=$JK_WIOS/src/sys
+export JK_CFG=$JK_WIOS/src/sys/cfgd
+export JK_GENERATED=$JK_WIOS/obj/birch/src/sys/cfgd/__generated
+export JK_RIM=$JK_WIOS/src/sys/cc2/rim
+export JK_CP=$JK_WIOS/src/sys/cfgd/hotspot
+export JK_APCC=/usr/lib/python2.7/site-packages/cfgd/cloud_client
+export JK_LOGTAB=$JK_WIOS/src/sys/skel_fs/root/etc/wios/logtab
+
+alias  cdapout="cd ${JK_OUT}/birch; ls -al"
+alias  cdcfg="cd ${JK_CFG}; ls -al"
+alias  cdcore="cd ${JK_CFG}/core; ls -al"
+alias  cdrd="cd ${JK_CFG}/remote_debug; ls -al"
+alias  cdyang="cd ${JK_CFG}/schema; ls -al"
+alias  cdcp="cd ${JK_CP}; ls -al"
+alias  cdssm="cd ${JK_SYS}/ssm/; ls -al"
+alias  cdrim="cd ${JK_RIM}; ls -al"
+alias  cddpd="cd ${JK_SYS}/dpd2; ls -al"
+alias  cddp="cd $JK_WIOS/src/dataplane; ls -al"
+alias  cdfw="cd $JK_WIOS/src/dataplane/fw; ls -al"
+alias  cdmint="cd ${JK_SYS}/dpd2; ls -al"
+alias  cdsuper="cd ${JK_SYS}/cc2/super; ls -al"
+alias  cdcc="cd ${JK_CFG}/cloud_client; ls -al"
+alias  cdcco="cd $JK_WIOS/out/nuxi/root/usr/lib/python2.7/site-packages/cfgd/cloud_client; ls -al"
+alias  cdcfgo="cd $JK_WIOS/out/nuxi/root/usr/lib/python2.7/site-packages/cfgd/cloud_client; ls -al"
+alias  cdalmo="cd $JK_WIOS/out/nuxi/root/usr/lib/python2.7/site-packages/alarmd; ls -al"
+alias  cdco="cd ${JK_CFG}/core; ls -al"
+alias  cdxco="cd $JK_WIOS/out/nuxi/root/usr/lib/python2.7/site-packages/cfgd/core; ls -al"
+alias  cdvxco="cd $JK_WIOS/out/nuxi-guest/root/usr/lib/python2.7/site-packages/cfgd/core; ls -al"
+alias  cdrpto="cd $JK_WIOS/out/nuxi/root/usr/lib/python2.7/site-packages/nsightd; ls -al"
+
+alias  cdapcoo="cd $JK_WIOS/out/birch/root/usr/lib/python2.7/site-packages/cfgd/core; ls -al"
+
+alias  cdapcoreo="cd /usr/lib/python2.7/site-packages/cfgd/core"
+alias  scpmain="rm -rf  main.pyo; scp jongky@157.235.91.82:/home/jongky/wios/out/birch/root/usr/lib/python2.7/site-packages/cfgd/core/main.pyo ."
+alias  scpmart="rm -rf  mart.pyo; scp jongky@157.235.91.82:/home/jongky/wios/out/birch/root/usr/lib/python2.7/site-packages/cfgd/core/mart.pyo ."
+
+alias  cdapcc="cd $JK_APCC; ls -al"
+alias  cprs="cdco; echo 'cp rs_shell.pyo $WWW'; cp rs_shell.pyo $WWW"
+alias  cdlogtab="cd $JK_LOGTAB; ls -al"
+alias  cdgen="cd $JK_GENERATED; ls -al"
+alias  runcfgd="cd /usr/lib/python2.7/site-packages; python -OO -m cfgd.core.main &"
+alias  runalmd="cd /usr/lib/python2.7/site-packages; python -OO -m alarmd.main &"
+
+#====================================================================================*
+# 3.8  Alias for Accessing My Setup(Controller/AP/nSightServer)
+#====================================================================================*
+alias  mini="sudo minicom"
+alias  pvx="ping $JK_VX"
+alias  pap1="ping $JK_NUXI_AP1"
+alias  pap2="ping $JK_NUXI_AP2"
+alias  pap3="ping $JK_NUXI_AP3"
+alias  papc1="ping $JK_CLOUD_AP1"
+alias  papc2="ping $JK_CLOUD_AP2"
+alias  papc3="ping $JK_CLOUD_AP3"
+alias  prfs="ping $JK_RFS"
+alias  px="ping $JK_NUXI"
+alias  pnuxi="ping $JK_NUXI"
+alias  pvm="ping $JK_VM_CLOUD"
+alias  ssha="ssh admin@$JK_NUXI"
+alias  sshx="ssh admin@$JK_NUXI"
+alias  sshxr="ssh root@$JK_NUXI"
+alias  sshvx="ssh admin@$JK_VX"
+alias  sshvxr="ssh root@$JK_VX"
+alias  sshvm="ssh jongky@$JK_VM_CLOUD"
+alias  sshvmx="eval \"$(ssh-agent -s)\"; ssh-add; sshvm"
+alias  sshrfs="ssh admin@$JK_RFS"
+alias  sshrfsr="ssh root@$JK_RFS"
+
+alias  sshap="ssh admin@$JK_NUXI_AP"
+alias  sshap1="ssh admin@$JK_NUXI_AP1"
+alias  sshap2="ssh admin@$JK_NUXI_AP2"
+alias  sshap3="ssh admin@$JK_NUXI_AP3"
+alias  sshap1r="ssh root@$JK_NUXI_AP1"
+alias  sshap2r="ssh root@$JK_NUXI_AP2"
+alias  sshap3r="ssh root@$JK_NUXI_AP3"
+alias  sshapc1="ssh admin@$JK_CLOUD_AP1"
+alias  sshapc2="ssh admin@$JK_CLOUD_AP2"
+alias  sshapc3="ssh admin@$JK_CLOUD_AP3"
+alias  sshapc1r="ssh root@$JK_CLOUD_AP1"
+alias  sshapc2r="ssh root@$JK_CLOUD_AP2"
+alias  sshapc3r="ssh root@$JK_CLOUD_AP3"
+
+alias  sshqa="ssh admin@$JK_QA_TEST"
+alias  sshqar="ssh root@$JK_QA_TEST"
+alias  sshku="ssh admin@$JK_KUMAR_TEST"
+
+alias  sshmartsim="ssh labuser@$JK_MARTSIM"
+alias  sshapp="sshpass -p motorola ssh admin@$MY_AP"
+alias  wgetcc="cdapcc; rm -rf rs_shell.pyo; wget http://157.235.91.230/rs_shell.pyo"
+
+#====================================================================================*
+# 3.9  Alias for Accessing WingCloud HotFix AMAZON Servers
+#====================================================================================*
+alias  sshhotfix1="ssh -i /mnt/ssd/my_backup/wingcloud/wingcloud.pem ubuntu@ec2-54-255-218-139.ap-southeast-1.compute.amazonaws.com"
+alias  sshhotfix2="ssh -i /mnt/ssd/my_backup/wingcloud/wingcloud.pem ubuntu@ec2-54-251-165-139.ap-southeast-1.compute.amazonaws.com"
+
+
+#====================================================================================*
+# 3.10  Alias for Accessing Linux Utility
+#====================================================================================*
+alias  chknetstat="while sleep 3; do netstat -nat | grep 80; echo ; done"
+alias  mksh="cd /etc; sudo rm -rf sh; sudo ln -s bash sh"
+alias  npmp="npm config set proxy http://wwwgate0.mot.com:1080; npm config set https-proxy http://wwwgate0.mot.com:1080"
+
+
+
+#####################################################################################
+# 4.  Utility Functions for Easy Use          
+#####################################################################################
+
+
+#====================================================================================*
+# 4.1  Prompt() 
+# usage prompt message
+# Result is in INPUT
+#====================================================================================*
+prompt()
+{
+    while true
+    do
+        echo -n "$1, or q to quit: "
+        read -e INPUT
+        [ "$INPUT" ] || continue
+        echo $INPUT | grep '^[qQ]$' >/dev/null 2>&1 && {
+            [ "$2" = "noq" ] && {
+                return 1
+            }
+            exit 0
+        }
+        echo $INPUT | grep '^[qQ][uU][iI][tT]$' >/dev/null 2>&1 && {
+            [ "$2" = "noq" ] && {
+                return 1
+            }
+            exit 0
+        }
+        return 0
+    done
+}
+
+#====================================================================================*
+# 4.2  Promptyn() 
+# usage promptyn message noq
+# $1 message to prompt
+# $2 no here is equivalent to quit so only print y/n
+#====================================================================================*
+promptyn()
+{
+    [ "$NOPROMPT" ] && {
+        return 0
+    }
+    postfix="[yes/no/quit]?:"
+    [ "$2" = "noq" ] && {
+        postfix="[yes/no]?:"
+    }
+    while true
+    do
+        echo -n "$1 $postfix "
+        read -e INPUT
+        echo $INPUT | grep '^[yY]$' >/dev/null 2>&1 && return 0
+        echo $INPUT | grep '^[yY][eE][sS]$' >/dev/null 2>&1 && return 0
+        echo $INPUT | grep '^[nN]$' >/dev/null 2>&1 && return 1
+        echo $INPUT | grep '^[nN][oO]$' >/dev/null 2>&1 && return 1
+        echo $INPUT | grep '^[qQ]$' >/dev/null 2>&1 && {
+            promptq && return 1;
+            exit 0
+        }
+        echo $INPUT | grep '^[qQ][uU][iI][tT]$' >/dev/null 2>&1 && {
+            promptq && return 1;
+            exit 0
+        }
+        echo "Error: Unrecognized input $INPUT"
+        echo
+    done
+}
+
+#####################################################################################
+# 5.  Utility Functions for Branching & Syncing.........
+#####################################################################################
+#--------------------------------------------------------------------
+# 5.1 : Script to clone any branch to destination branch
+#--------------------------------------------------------------------
+gc()    
+{
+    echo "[GIT-Clone] This scrip is cloning [WC-$2] from git [dev/WC-$1]…." 
+    cdm
+    alias cdcm="cd $WORK"
+    git checkout -b dev/WC-$2
+    echo "[GIT-Clone] Clone [WC-$2] is done from git…." 
+}
+
+#====================================================================================*
+# 5.2  Set Branch Functions from git force
+#====================================================================================*
+setbr()
+{
+    echo "## This will checkout the Working Branch !!!!"
+    prompt "Enter Branch Name >> "
+    BRANCH=$INPUT
+    export JK_WIOS=/home/jongky/$BRANCH
+    unalias cdm
+    alias cdm="cd $W"
+    echo ">> Checkouted branch is now $BRANCH ========> !!!!"
+}
+
+#====================================================================================*
+# 5.3 Set Branch <origin/develop> 
+#====================================================================================*
+setdevel()
+{
+    echo "## This will set GIT Branch to <origin/develop> !!!!"
+    BRANCH=develop
+    cd /Users/jongkylee/acc-depot/devel/cm
+    git checkout develop
+    export WC=/Users/jongkylee/Documents/Source/$BRANCH
+    export WORK=/Users/jongkylee/acc-depot/devel/cm
+    unalias cdcm
+    alias cdcm="cd $WORK"
+    echo ">> Checkouted GIT branch is now $BRANCH ========> !!!!"
+}    
+
+#--------------------------------------------------------------------
+# 5.4 : Script to search file         
+#--------------------------------------------------------------------
+fs()
+{
+   find . -name $1 -print
+}
+
+#--------------------------------------------------------------------
+# 5.5 : Script to search file         
+#--------------------------------------------------------------------
+fsscr()
+{
+   echo "cdscr1"
+   cdscr1
+   find . -name $1 -print
+   echo "cdscr2"
+   cdscr2
+   find . -name $1 -print
+   echo "cdscr3"
+   cdscr3
+   find . -name $1 -print
+   echo "cdscr4"
+   cdscr4
+   find . -name $1 -print
+}
+
+#--------------------------------------------------------------------
+# 5.6 : Script to search text in all files under the folder trees        
+#--------------------------------------------------------------------
+tsa()
+{
+  grep -lR --exclude=app.js $1 *
+}
+ts()
+{
+  grep -R --exclude=app.js --exclude=*.svn-base --exclude=*.json --exclude=*.css $1 *
+}
+
+#--------------------------------------------------------------------
+# 5.7 : Script to search text in *.c files         
+#--------------------------------------------------------------------
+tsc()
+{
+   for file in $( find $directory -type f -name '*.c' | sort )
+   do
+       strings -f $file | grep $1
+   done
+}
+
+#--------------------------------------------------------------------
+# 5.8 : Script to search text in *.cpp files         
+#--------------------------------------------------------------------
+tscpp()
+{
+   for file in $( find $directory -type f -name '*.cpp' | sort )
+   do
+       strings -f $file | grep $1
+   done
+}
+
+#--------------------------------------------------------------------
+# 5.9 : Script to search text in *.h files         
+#--------------------------------------------------------------------
+tsh()
+{
+   for file in $( find $directory -type f -name '*.h' | sort )
+   do
+       strings -f $file | grep $1
+   done
+}
+
+#--------------------------------------------------------------------
+# 5.10 : Script to search  file         
+#--------------------------------------------------------------------
+ttshow()
+{
+   if [ -z $DISPLAY ]; then
+   echo "ESC]0; $* ^G"
+   fi
+}
+
+
+#####################################################################################
+# 9.  Macro Aliases
+#####################################################################################
+#--------------------------------------------------------------------
+# 9.1 : Script to find process  
+#--------------------------------------------------------------------
+gp()    
+{
+   ps -ef |grep $1
+}
+
+#--------------------------------------------------------------------
+# 9.2 : Script to search Size
+#--------------------------------------------------------------------
+findsz()
+{
+    # if [[ ! -z $# ]]
+    if [ $# -eq 1 ]
+    then 	find . -size $1 -print
+    else	echo "Usage : findsz +1000000c    // => gt 100Mb "
+    fi
+}
+
+#--------------------------------------------------------------------
+# 9.3 : Script to search Error Code        
+#--------------------------------------------------------------------
+gerr() 
+{
+    grep $1 /usr/include/sys/errno.h
+}
+
+#--------------------------------------------------------------------
+# 9.4 : Script to search Signal
+#--------------------------------------------------------------------
+gsig() 
+{
+    grep $1 /usr/include/sys/iso/signal_iso.h
+}
+
+#--------------------------------------------------------------------
+# 9.5 : Script to run snmpwalk fiese         
+#--------------------------------------------------------------------
+run-snmpwalk()
+{
+    while true
+    do
+        echo "#########################################################################"
+        echo "#   snmpwalk -v2c -c public -t 10 172.29.0.137 enterprises.15983  "
+        echo "#########################################################################"
+        snmpwalk -v2c -c public -t 1000 172.29.0.137 enterprises.15983
+        echo -n 
+        sleep 5
+    done
+}
+
+
+#####################################################################################
+# 10.  Macro Aliases for ZEBRA Devices
+#####################################################################################
+#--------------------------------------------------------------------
+# 10.1 : Script to or from SCP file from My Linux BOX
+#--------------------------------------------------------------------
+sett()
+{
+    echo "#########################################################################"
+    echo "#   Setup JK_TARGET Machine to SCP or FTP : "
+    echo "#########################################################################"
+    echo ""
+    echo "[1]  My Devel Linux Server   :   157.235.91.82"
+    echo "[2]  My VM Cloud    Server   :   157.235.91.136"
+    echo "[3]  My Cloud Test  AP1      :   157.235.91.98"
+    echo "[4]  My Cloud Test  AP2      :   157.235.91.37"
+    echo ""
+    echo "[5]  My NUXI-NX9500 Server   :   192.168.0.1"
+    echo "[6]  My VX9000 NOC Server    :   192.168.0.145"
+    echo "[7]  My RFS-4000 Controller  :   192.168.0.146"
+    echo "[8]  Pinnacl Test AP1-7530   :   192.168.0.150"
+    echo "[9]  Pinnacl Test AP2-7522   :   192.168.0.147"
+    echo "----------------------------------------------------------------------"    
+    prompt "Enter Number to set JK_TARGET Machine ===>> "
+    JK_TARGET_NUM=$INPUT
+
+    case "$JK_TARGET_NUM" in
+
+        1)
+        JK_TARGET=$JK_LINUX
+        ;;
+
+        2)
+        JK_TARGET=$JK_VM_CLOUD
+        ;;
+
+        3)
+        JK_TARGET=$JK_CLOUD_AP1
+        ;;
+
+        4)
+        JK_TARGET=$JK_CLOUD_AP2
+        ;;
+
+        5)
+        JK_TARGET=$JK_NUXI
+        ;;
+
+        6)
+        JK_TARGET=$JK_VX
+        ;;
+
+        7)
+        JK_TARGET=$JK_RFS
+        ;;
+
+        8)
+        JK_TARGET=$JK_NUXI_AP1
+        ;;
+
+        9)
+        JK_TARGET=$JK_NUXI_AP2
+        ;;
+
+        *)
+        echo $"Usage: 1 -- 9"
+        ;;
+    esac
+    echo "@@@ ===> JK_TARGET Machine will be IP Address of [$JK_TARGET] !!!!"  
+}
+
+scptr()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_TARGET:$2"
+    scp $1 root@$JK_TARGET:$2
+}
+
+scpt()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_TARGET:$2"
+    scp $1 jongky@$JK_TARGET:$2
+}
+
+scplog()    
+{
+    prompt ">> Enter DNS Name of Server what you want to scp ==> "
+    ServerID=$INPUT
+    prompt ">> Enter File Name to copy from ==> "
+    FileName=$INPUT
+
+    echo ""
+    echo " << You selected Server : [$ServerID], File : [$FileName] "
+    echo ""
+    scp aa@$ServerID:/opt/cm/var/log/celery/$FileName .
+}
+
+scpli()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_LINUX~jongky/backup/log]…."
+    scp $1 jongky@$JK_LINUX:~jongky/backup/log 
+}
+
+scpx()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_NUXI/usr/scripts/mart]…."
+    scp $1 root@$JK_NUXI:/usr/scripts/mart 
+}
+
+scpxc()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_NUXI/usr/lib/python2.7/site-packages/cfgd/]…."
+    scp $1 root@$JK_NUXI:/usr/lib/python2.7/site-packages/cfgd/
+}
+
+scpxcc()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_NUXI/usr/lib/python2.7/site-packages/cfgd/core/]…."
+    scp $1 admin@$JK_NUXI:/usr/lib/python2.7/site-packages/cfgd/core 
+}
+
+scpvxc()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_VX/usr/lib/python2.7/site-packages/cfgd/]…."
+    scp $1 root@$JK_VX:/usr/lib/python2.7/site-packages/cfgd/
+}
+
+scpvxcfg()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_VX/usr/lib/python2.7/site-packages/cfgd/]…."
+    scp -r cfgd root@$JK_VX:/usr/lib/python2.7/site-packages/
+}
+
+scpvxcc()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_VX/usr/lib/python2.7/site-packages/cfgd/core/]…."
+    scp $1 root@$JK_VX:/usr/lib/python2.7/site-packages/cfgd/core 
+}
+
+scpvxcr()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_VX/usr/lib/python2.7/site-packages/cfgd/remote_debug]…."
+    cd /home/jongky/wios_58pinacle/out/nuxi-guest/root/usr/lib/python2.7/site-packages/cfgd/remote_debug
+    scp $1 root@$JK_VX:/usr/lib/python2.7/site-packages/cfgd/remote_debug 
+}
+
+scpxr()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_NUXI/usr/lib/python2.7/site-packages/cfgd/remote_debug/]…."
+    scp $1 admin@$JK_NUXI:/usr/lib/python2.7/site-packages/cfgd/remote_debug 
+}
+
+scpapc()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $MY_AP/usr/lib/python2.7/site-packages/cfgd/core/]…."
+    scp $1 root@$MY_AP:/usr/lib/python2.7/site-packages/cfgd/core/
+}
+
+scpapssm()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $MY_AP/]…."
+    scp $1 root@$MY_AP:/usr/sbin/
+}
+
+scpxa()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_NUXI/usr/scripts/mart/alarm]…."
+    scp $1 root@$JK_NUXI:/usr/scripts/mart/alarm
+}
+
+scpalmd()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_NUXI/usr/lib/python2.7/site-packages/alarmd]…."
+    scp $1 root@$JK_NUXI:/usr/lib/python2.7/site-packages/alarmd
+}
+
+scpd()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_VM_CLOUD~jongky/backup/data]…."
+    scp $1 jongky@$JK_VM_CLOUD:~jongky/backup/data 
+}
+
+scpvm()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_WING/wingcloud/usr/scripts/mart]…."
+    scp $1 jongky@$JK_WING:/wingcloud/usr/scripts/mart 
+}
+
+scpvmds()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_WING//wingcloud/cloudcfg/node_modules/dashboard_server]…."
+    scp $1 jongky@$JK_WING://wingcloud/cloudcfg/node_modules/dashboard_server/
+}
+
+scpvmdsr()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_WING//wingcloud/cloudcfg/node_modules/dashboard_server/remote_shell/]…."
+    scp $1 jongky@$JK_WING://wingcloud/cloudcfg/node_modules/dashboard_server/remote_shell/
+}
+
+scpvmcu()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_WING//wingcloud/cloudcfg/node_modules/cloud_utils]…."
+    scp $1 jongky@$JK_WING://wingcloud/cloudcfg/node_modules/cloud_utils/
+}
+
+scpapc2r()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_CLOUD_AP2/usr/lib/python2.7/site-packages/cfgd/remote_debug/]…."
+    scp $1 root@$JK_CLOUD_AP2:/usr/lib/python2.7/site-packages/cfgd/remote_debug 
+}
+
+scpapc2cc()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_CLOUD_AP2/usr/lib/python2.7/site-packages/cfgd/cloud_client/]…."
+    cd /mnt/ssd/wios_sprint18/out/birch/root/usr/lib/python2.7/site-packages/cfgd/cloud_client
+    scp $1 root@$JK_CLOUD_AP2:/usr/lib/python2.7/site-packages/cfgd/cloud_client 
+}
+
+
+scpvmd()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_WING~jongky/my_backup/data]…."
+    scp $1 jongky@$JK_WING:~jongky/my_backup/data
+}
+
+scpsim()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_MARTSIM:~labuser]…."
+    scp $1 labuser@$JK_MARTSIM:~labuser/ 
+}
+
+#--------------------------------------------------------------------
+# 10.4 : Script to check Python Syntax
+#--------------------------------------------------------------------
+pcom()    
+{
+    echo "[DEBUG] This file checks the syntax of Python….(python -m py_compilf) " 
+    python -m py_compile $1
+}
+
+#--------------------------------------------------------------------
+# 10.5 : Script to forward SSH Key Python Syntax
+#--------------------------------------------------------------------
+sshvm1()    
+{
+    echo "[DEBUG] This forward SSH key….(ssh -o ForwardAgent=yes lab@l2) " 
+    eval "$(ssh-agent -s)"
+    ssh-add
+    sshvm
+}
+
+#--------------------------------------------------------------------
+# 10.6 : Script to run SSH to My VM Cloud
+#--------------------------------------------------------------------
+scpssh()    
+{
+    echo "[DEBUG] This will open SSH with SSH key…."
+
+    ssh -o ForwardAgent=yes $1
+}
+
+
+#--------------------------------------------------------------------
+# 10.6 : Script to run svnmerge from cedar trunk branch
+#--------------------------------------------------------------------
+svnr()
+{
+    echo "[Warning—] This file[$1] is being marked as resolved.."
+    svn resolved $1
+}
+
+svnm()
+{
+    echo "[Warning—] This revision[$1] is being merged from netvision.sj.symbol.com/wios/branches2/rel58_cedar/..."
+    tools/bin/svnmerge.py merge -r$1 -S svn://netvision.sj.symbol.com/wios/branches2/rel58_cedar 
+}
+
+
+#--------------------------------------------------------------------
+# 10.7 : Script to run svnmerge from pinnacles branch
+#--------------------------------------------------------------------
+svnmp()
+{
+    echo "[Warning—] This revision[$1] is being merged to /branches2/rel58_pinnacles...."
+    tools/bin/svnmerge.py merge -r$1 -S svn://netvision.sj.symbol.com/wios/branches2/rel58_pinnacles 
+}
+
+#--------------------------------------------------------------------
+# 10.8 : Script to run BUILD at night time
+#--------------------------------------------------------------------
+runcmd()
+{
+    echo "[Warning—] This command[$1] will be running in [$2] Minutes."
+    sleep "$(($2 * 60))"
+    $1
+}
+
+
+
+#####################################################################################
+# 11.  TIPs to resolve few  ZEBRA issues
+#####################################################################################
+#--------------------------------------------------------------------
+# 11.1 : Need to upgarde gcc/g++ to 4.8.5 to build node-4.2.2
+#--------------------------------------------------------------------
+# 1. Use "gcc-4.8.5.tar.bz2" from "wios/tools/gcc-glibc"
+#    1.> bz2 --> tar -> ./configure -> make --> sudo make install
+
+
+####################################################################
+# End of Bourne Shell 
+####################################################################
+
+
+
