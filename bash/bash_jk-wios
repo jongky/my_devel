@@ -1,11 +1,11 @@
 ##########################################################################
 # Bourne Shell : Set up basic Environment                                #
-#                 : December, 16 2015    modified by Jong K Lee          #
+#                 : January, 03 2017    modified by Jong K Lee          #
 # Project         : My Development Environment                           #
 ########################################################################## 
-#  MY Development Environment : 12/16/2015 by Jongky Lee                 #
-#   1. Notebook HOST : 157.235.90.34                                     #
-#   2. UBUNTU LINUX Server : 157.235.91.230                              #
+#  MY Development Environment : 01/03/2017 by Jongky Lee                 #
+#   1. Notebook HOST :                                                   #
+#   2. UBUNTU LINUX Server :                                             #
 ########################################################################## 
 
 #####################################################################################
@@ -56,34 +56,36 @@ alias  ns7999="netstat -nat | grep 7999"
 alias  nsp='nslookup wwwgate0.mot.com'
 alias  nss='nslookup netvision.sj.symbol.com'
 alias  cpr='cd /etc; sudo cp $JK_BU/conf/resolv.conf .'
+alias  pass='/mnt/ssd/my_backup/password/passwd_gen'	
 
 #========================================================================
 # 1.2  JK Test Server IP Address Environemnt
 #========================================================================
-export JK_LINUX=157.235.91.54
-export JK_UBUNTU=157.235.91.136
-export JK_VM_CLOUD=157.235.91.22
-export JK_CLOUD_AP1=157.235.91.211
-export JK_CLOUD_AP2=157.235.91.34
-export JK_CLOUD_AP3=157.235.91.37
+export JK_LINUX=10.254.160.25
+export JK_UBUNTU=10.254.160.26
+export JK_VM_CLOUD=10.254.160.25
+export JK_NX9500=10.254.160.26
+
+export JK_CLOUD_AP1=jk-cloud-ap1.extremenetworks.com
+export JK_CLOUD_AP2=jk-cloud-ap2.extremenetworks.com
+export JK_CLOUD_AP3=jk-cloud-ap.extremenetworks.com
+export JK_CLOUD_AP4=157.235.91.192
+export QA_VM_CLOUD=172.20.31.80
 
 export JK_LINUX2=192.168.0.100
-export JK_WIOSIOS_FTP=172.20.15.248
+export JK_WIOSIOS_FTP=10.254.160.25
 # Userid= www, password = apache, Images/WiNG5.4.0.0)
 
 export JK_NUXI=192.168.0.1
 export JK_VX=157.235.91.210
 export JK_RFS=192.168.0.146
-export JK_NUXI_AP1=192.168.0.150
-export JK_NUXI_AP2=192.168.0.98
-export JK_NUXI_AP3=192.168.0.143
+export JK_NUXI_AP1=192.168.0.148
+export JK_NUXI_AP2=192.168.0.147
+export JK_NUXI_AP3=192.168.0.149
+export JK_NUXI_AP4=192.168.0.145
 
-export JK_KUMAR_TEST=157.235.92.95
-export JK_QA_TEST1=172.20.15.17
 export JK_WING=$JK_VM_CLOUD
-export JK_MARTSIM=157.235.91.213
 export JK_NUXIM=/usr/scripts/mart
-
 export JK_QA_TOOL_TEST=10.233.89.166
 
 
@@ -113,18 +115,21 @@ export JK_WIOSINI=/etc/init.d
 
 export JK_SSD=/mnt/ssd
 export JK_BU=/mnt/ssd/my_backup/
+#export JK_BU=$HOME/my_backup/
 export JK_JIRA=/mnt/ssd/my_backup/JIRA
-export JK_MYCODE=/mnt/ssd/my_backup/mycode
+export JK_MYCODE=/mnt/ssd/my_backup/my_devel
 export JK_BW=$JK_BU/wios
-export JK_LOG=$JK_BU/log/logstash
+export JK_LOG=$JK_BU/log
 export JK_VMLOG=/var/log/wingcloud
 export JK_CFG=/wingcloud/cloudcfg
 export JK_NODE=/wingcloud/cloudcfg/node_modules
 export JK_DASH=/wingcloud/cloudcfg/node_modules/dashboard_server
+export JK_MINO=/mnt/ssd/my_backup/my_source/minovate/admin/angular/app/minovate
 
 
 alias  cdk="cd ${JK_PKG}"
 alias  cds="cd ${JK_SSD}"
+alias  cdp="cd /mnt/ssd/my_backup/my_proj/angular"
 alias  cdbu="cd ${JK_BU}; pwd; ls -al"
 alias  cdopt="cd ${JK_TOOLS_INSTALL_PATH}; pwd; ls"
 alias  cdbw="cd ${JK_BW}; pwd; ls -al"
@@ -144,6 +149,7 @@ alias  cdfs="cd ${JK_FS}; pwd; ls -al"
 alias  cdcoreo="cd ${JK_COREOUT}; pwd; ls -al"
 alias  cdsw="cd ${JK_BU}/tools; pwd; ls -al"
 alias  cdjira="cd ${JK_JIRA}; pwd; ls -al"
+alias  cdmin="cd ${JK_MINO}; pwd; ls -al"
 
 alias mongochef="/mnt/ssd/my_backup/tools/mongochef-4.3.0-linux-x64-dist/bin/mongochef.sh &""
 " 
@@ -156,24 +162,20 @@ alias mongochef="/mnt/ssd/my_backup/tools/mongochef-4.3.0-linux-x64-dist/bin/mon
 #====================================================================================*
 
 alias  vp="cd $HOME;vi .bashrc"
-alias  rp="export JK_WIOS=/home/jongky/wios; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile"
-alias  rpvm="cd $HOME; cp $HOME/my_backup/data/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile"
-alias  rpw="export JK_WIOS=/mnt/ssd/wios; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cdw"
+export JK_BASH=/mnt/ssd/my_backup/my_devel/bash/bash_jk-wios
+export JK_BASH_DIR=/mnt/ssd/my_backup/my_devel/bash/
+alias cdjsh="cd $JK_BASH_DIR"
+alias cdbash="cd $JK_BASH_DIR"
+alias  rp="export JK_WIOS=/home/jongky/wios; cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile"
+alias  rpvm="cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile"
+alias  rpw="export JK_WIOS=/mnt/ssd/wios; cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile; cdw"
 alias  cdsh="cd $HOME; cd util/bash"
-alias  rpp="export JK_WIOS=/home/jongky/wios_58pinacle; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /home/jongky/wios_58pinacle"
-alias  rp582="export JK_WIOS=/home/jongky/wios_rel582; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /mnt/ssd/wios_rel584"
-alias  rp585="export JK_WIOS=/mnt/ssd/rel58_maint; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /mnt/ssd/rel58_maint"
-alias  rpcedar="export JK_WIOS=/home/jongky/wios_58cedar; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /home/jongky/wios_58cedar"
-alias  rpm="export JK_WIOS=/home/jongky/wios_58pinacle; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashxlrzvalnrc;. .bashrc; cp .bashrc .bash_profile; cd /home/jongky/wios_58pinacle"
-alias  rp18="export JK_WIOS=/mnt/ssd/wios_sprint18; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /mnt/ssd/wios_sprint18"
-alias  rppoc="export JK_WIOS=/mnt/ssd/rel583_poc; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /mnt/ssd/rel583_poc"
-alias  poc="export JK_WIOS=/home/jongky/ssd/rel583_poc; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /home/jongky/ssd/rel583_poc"
-alias  rpcloud="export JK_WIOS=/home/jongky/cloud_service_live; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /mnt/ssd/cloud_service_live"
-alias  rpc="export JK_WIOS=/mnt/ssd/cloud_service_live; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /mnt/ssd/cloud_service_live"
-alias  rpaspen="export JK_WIOS=/home/jongky/rel58_aspen; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /home/jongky/rel58_aspen"
-alias  rp31="export JK_WIOS=/home/jongky/release_sprint31; JK_TARGET=nuxi; cd $HOME; cp /mnt/ssd/my_backup/bash/bash_jk-wios .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /home/jongky/release_sprint31"
+alias  rppoc="export JK_WIOS=/mnt/ssd/rel583_poc; JK_TARGET=nuxi; cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /mnt/ssd/rel583_poc"
+alias  rpcloud="export JK_WIOS=/home/jongky/cloud_service_live; JK_TARGET=nuxi; cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /mnt/ssd/cloud_service_live"
+alias  rpc="export JK_WIOS=/home/jongky/cloud_service_live; JK_TARGET=nuxi; cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /home/jongky/cloud_service_live"
+alias  rp32="export JK_WIOS=/home/jongky/release22_sprint16; JK_TARGET=nuxi; cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /home/jongky/release22_sprint16"
 
-
+alias  rp21="export JK_WIOS=/home/jongky/release21_sprint7; JK_TARGET=nuxi; cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile; cd /home/jongky/release21_sprint7"
 #====================================================================================*
 # 3.2  : Common : wios, wingcloud : BUILD Environment Variables
 #====================================================================================*
@@ -204,11 +206,12 @@ alias  cdev="cd ${JK_SRC}/sys/skel_fs/root/etc/wios/logtab; pwd; ls -al"
 #====================================================================================*
 # 3.3  : MART Aliases : svn (Sub Version) for WiOS (Z) : /wios/src/sys/mart
 #====================================================================================*
-export JK_M=$JK_WIOS/src/sys/mart
+export JK_N=$JK_WIOS/src/nsight
+export JK_M=$JK_WIOS/src/nsight/mart
 export JK_MU=$JK_WIOS/src/ui/html5/mart
 export JK_SYS=$JK_WIOS/src/sys
 export JK_ALM=$JK_WIOS/src/sys/mart/alarm
-export JK_REPORTD=$JK_WIOS/src/sys/nsightd
+export JK_REPORTD=$JK_WIOS/src/nsight/nsightd
 export JK_ALMD=$JK_WIOS/src/sys/alarmd
 export JK_MARTUI=$JK_WIOS/src/ui/html5/mart
 export JK_NODE_PKG=$JK_WIOS/src/sys/3rdparty/node-mart-packages
@@ -220,6 +223,7 @@ export JK_WIOSWW=/wingcloud/web/htdocs/MartUI
 export JK_WIOSMU=/wingcloud/web/htdocs/MartUI
 
 alias  cdm="cd $JK_M; pwd; ls -al"
+alias  cdn="cd $JK_N; pwd; ls -al"
 alias  cdsys="cd $JK_SYS; pwd; ls -al"
 alias  cdpass="cd $JK_WIOS/tools/WATTS/tools; pwd; ls -al"
 alias  cd3rd="cd $JK_SYS/3rdparty/; pwd; ls -al"
@@ -239,7 +243,8 @@ alias  cdrpt="cd ${JK_REPORTD}; ls -al"
 alias  cdpci="cd ${JK_REPORTD}/reports; ls -al"
 
 alias  cdsim="cdw; cd src/sys/mart/martsim; pwd; ls -al"
-alias  cdsimo="cdw; cd out/nuxi-bare_metal/root/usr/scripts/mart/martsim; pwd; ls -al"
+alias  cdsimo="cdw; cd out/martsim/root/usr/scripts/mart/martsim; pwd; ls -al"
+alias  runsim="cdsimo; pwd; sh martsim.sh"
 alias  cdssmo="cdw; cd out/birch/root/usr/sbin; pwd; ls -al"
 
 alias  msim="cdmsim; sh martsim.sh"
@@ -319,6 +324,8 @@ alias  sync_poc="svn co svn://netvision.sj.symbol.com/wios/branches2/rel583_poc 
 alias  sync_58p="svn co svn://netvision.sj.symbol.com/wios/branches2/rel58_pinnacles wios_58p"
 alias  sync_csl="svn co svn://netvision.sj.symbol.com/wios/branches2/cloud_service_live cloud_service_live"
 alias  sync_sprint31="svn co svn://netvision.sj.symbol.com/wios/branches2/cloud_release/release_sprint31 release_sprint31"
+alias  sync_sprint32="svn co svn://netvision.sj.symbol.com/wios/branches2/cloud_release/release22_sprint16 release22_sprint16"
+alias  sync_sprint7="svn co svn://netvision.sj.symbol.com/wios/branches2/cloud_release/release21_sprint7 release21_sprint7"
 
 
 alias  mktool="cdtool; pwd; ls -al;sudo sh ./prepare_build_machine-debian.sh jongky"
@@ -347,6 +354,7 @@ alias  m="cdmui; pwd; sencha config -p build.options=\"WiNG_CONFIG:true\" then a
 # 3.6  Additional Developer Aliases : WingCloud start/stop for wios (ZEBRA)
 #====================================================================================*
 alias  wstop="sudo /etc/init.d/wingcloud stop"
+alias  wstatus="sudo /etc/init.d/wingcloud status"
 alias  wstart="sudo rm -rf /var/lib/mongodbmongod.lock; sudo /etc/init.d/wingcloud start"
 alias  tm="cd /var/log; tail -f /var/log/mart_server.log"
 
@@ -356,14 +364,12 @@ alias  tm="cd /var/log; tail -f /var/log/mart_server.log"
 #====================================================================================*
 alias  tm="tail -f /var/log/wingcloud/nsight_server.log"
 alias  tcm="tail -f /var/log/wingcloud/connection_manager_server"
-alias  tdm="tail -f /var/log/wingcloud/device_management_server"
+alias  tdm="tail -f /var/log/wingcloud/device_management_server"jongky
 alias  tds="tail -f /var/log/wingcloud/dashboard_server"
 alias  tmo="tail -f /var/log/wingcloud/mongod.log"
 
 alias  catm="tail -100 /var/log/wingcloud/nsight_server.log"
 alias  catcm="tail -100 /var/log/wingcloud/connection_manager_server"
-alias  catdm="tail -100 /var/log/wingcloud/device_management_server"
-alias  catds="tail -100 /var/log/wingcloud/dashboard_server"
 alias  catmo="tail -100 /var/log/wingcloud/mongod.log"
 
 
@@ -438,6 +444,7 @@ alias  pap3="ping $JK_NUXI_AP3"
 alias  papc1="ping $JK_CLOUD_AP1"
 alias  papc2="ping $JK_CLOUD_AP2"
 alias  papc3="ping $JK_CLOUD_AP3"
+alias  papc4="ping $JK_CLOUD_AP4"
 alias  prfs="ping $JK_RFS"
 alias  px="ping $JK_NUXI"
 alias  pnuxi="ping $JK_NUXI"
@@ -449,6 +456,8 @@ alias  sshxr="ssh root@$JK_NUXI"
 alias  sshvx="ssh admin@$JK_VX"
 alias  sshvxr="ssh root@$JK_VX"
 alias  sshvm="ssh jongky@$JK_VM_CLOUD"
+alias  sshvm2="ssh jongky@$JK_VM_CLOUD2"
+alias  sshvmq="ssh symbol@$QA_VM_CLOUD"
 alias  sshu="ssh jongky@$JK_UBUNTU"
 alias  sshvmx="eval \"$(ssh-agent -s)\"; ssh-add; sshvm"
 alias  sshrfs="ssh admin@$JK_RFS"
@@ -458,15 +467,19 @@ alias  sshap="ssh admin@$JK_NUXI_AP"
 alias  sshap1="ssh admin@$JK_NUXI_AP1"
 alias  sshap2="ssh admin@$JK_NUXI_AP2"
 alias  sshap3="ssh admin@$JK_NUXI_AP3"
+alias  sshap4="ssh admin@$JK_NUXI_AP4"
 alias  sshap1r="ssh root@$JK_NUXI_AP1"
 alias  sshap2r="ssh root@$JK_NUXI_AP2"
 alias  sshap3r="ssh root@$JK_NUXI_AP3"
+alias  sshap4r="ssh root@$JK_NUXI_AP4"
 alias  sshapc1="ssh admin@$JK_CLOUD_AP1"
 alias  sshapc2="ssh admin@$JK_CLOUD_AP2"
 alias  sshapc3="ssh admin@$JK_CLOUD_AP3"
+alias  sshapc4="ssh admin@$JK_CLOUD_AP4"
 alias  sshapc1r="ssh root@$JK_CLOUD_AP1"
 alias  sshapc2r="ssh root@$JK_CLOUD_AP2"
 alias  sshapc3r="ssh root@$JK_CLOUD_AP3"
+alias  sshapc4r="ssh root@$JK_CLOUD_AP4"
 
 alias  sshqa="ssh admin@$JK_QA_TEST"
 alias  sshqar="ssh root@$JK_QA_TEST"
@@ -493,11 +506,9 @@ alias  mksh="cd /etc; sudo rm -rf sh; sudo ln -s bash sh"
 alias  npmp="npm config set proxy http://wwwgate0.mot.com:1080; npm config set https-proxy http://wwwgate0.mot.com:1080"
 
 
-
 #####################################################################################
 # 4.  Utility Functions for Easy Use          
 #####################################################################################
-
 
 #====================================================================================*
 # 4.1  Prompt() 
@@ -975,7 +986,13 @@ scpapc2cc()
 scpvmd()    
 {
     echo "[Warning—] This file[$1] is being copied[SCP] to $JK_WING~jongky/my_backup/data]…."
-    scp $1 jongky@$JK_WING:~jongky/my_backup/data
+    scp $1 jongky@$JK_WING:~jongky/temp
+}
+
+scpvmd2()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_WING~jongky/my_backup/data]…."
+    scp $1 jongky@$JK_VM_CLOUD2:~jongky/temp
 }
 
 scpsim()    
