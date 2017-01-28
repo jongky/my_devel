@@ -40,8 +40,25 @@ void printList() {
    printf(" ] \n");
 }
 
+/*************************************************************************/
+/* [1.2] Single Linked List : Frequency of a given number in Linked List */
+/*************************************************************************/
+int count(struct node *head, int item)
+{
+    struct node* curr = head;
+    int count = 0;
+
+    while (curr != NULL)
+    {
+        if (curr -> data == item)
+            count++;
+        curr = curr -> next;
+    }
+    return count;
+}
+
 /****************************************************************/
-/* [1.2] Single Linked List : insert link at the first location */
+/* [1.3] Single Linked List : insert link at the first location */
 /****************************************************************/
 void insertFirst(int key, int data) {
    //create a link
@@ -58,7 +75,7 @@ void insertFirst(int key, int data) {
 }
 
 /****************************************************************/
-/* [1.3] Single Linked List : delete first item                 */
+/* [1.4] Single Linked List : delete first item                 */
 /****************************************************************/
 struct node* deleteFirst() {
 
@@ -79,22 +96,10 @@ bool isEmpty() {
    return head == NULL;
 }
 
-/****************************************************************/
-/* [1.5] Single Linked List : Length of List                    */
-/****************************************************************/
-int length() {
-   int length = 0;
-   struct node *current;
-    
-   for(current = head; current != NULL; current = current->next) {
-      length++;
-   }
-    
-   return length;
-}
+
 
 /****************************************************************/
-/* [1.6] Single Linked List : find a link with given key        */
+/* [1.5] Single Linked List : find a link with given key        */
 /****************************************************************/
 struct node* find(int key) {
 
@@ -122,7 +127,7 @@ struct node* find(int key) {
 }
 
 /****************************************************************/
-/* [1.7] Single Linked List : delete a link with given key      */
+/* [1.6] Single Linked List : delete a link with given key      */
 /****************************************************************/
 struct node* delete(int key) {
 
@@ -161,7 +166,7 @@ struct node* delete(int key) {
 }
 
 /****************************************************************/
-/* [1.8] Single Linked List : Delete all the Linked List        */
+/* [1.7] Single Linked List : Delete all the Linked List        */
 /****************************************************************/
 void deleteList(struct node** head_ref)
 {
@@ -182,7 +187,7 @@ void deleteList(struct node** head_ref)
 }
 
 /****************************************************************/
-/* [1.9] Single Linked List : Find Loop in A Single Linked List */
+/* [1.8] Single Linked List : Find Loop in A Single Linked List */
 /****************************************************************/
 bool hasLoop(NODE *head)  
 {  
@@ -191,68 +196,55 @@ bool hasLoop(NODE *head)
 
   while (slow && fast )  
   {  
-   slow = slow->next;  
-   fast = fast->next;  
+    slow = slow->next;  
+    fast = fast->next;  
     
-   if (fast)  
-       fast = fast->next;  
-   else  
-       return false;  //dead end  
+    if (fast)  
+      fast = fast->next;  
+    else  
+      return false;  //dead end  
     
-   if (slow == fast)  //loop detected  
-       return true;  
+    if (slow == fast)  //loop detected  
+      return true;  
   }  
-
   return false;  
 }
 
-/*************************************************************************/
-/* [1.10] Single Linked List : Frequency of a given number in Linked List */
-/*************************************************************************/
-int count(struct node *head, int item)
-{
-    struct node* curr = head;
-    int count = 0;
-
-    while (curr != NULL)
-    {
-        if (curr -> data == item)
-            count++;
-        curr = curr -> next;
-    }
-    return count;
-}
-
 /****************************************************************/
-/* [1.11] Single Linked List : Rotate Linked List by K nodes    */
+/* [1.9] Single Linked List : Rotate Linked List by K nodes    */
 /*   Given linked list   : 1 2 3 4 5                            */
 /*   Rotated Linked list : 3 4 5 1 2                            */
+/* 1) Traverse the list by k nodes.
+   2) Keep kth node in temp.
+   3) Travese till end of list and set last node pointer to start.
+   4) Set temp nodes next to head.
+   5) Point kth node next to NULL.
 /****************************************************************/
 rotate(struct node **head, int k)
 {
-    int count = 1;
     if (k == 0) 
         return;
+
     struct node * curr = *head;
     while (count < k && current != NULL)
     { 
-        curr = curr -> next;
+        curr = curr->next;
         count++;
     }   
 
     if (curr == NULL)
         return;
     struct node *kthNode = curr;
-    while (curr -> next != NULL)
-        curr = curr = curr -> next;
+    while (curr->next != NULL)
+        curr = curr->next;
 
-    curr-> next = *head;
-    *head = kthNode -> next;
-    kthNode -> next = NULL;
+    curr->next = *head;
+    *head = kthNode->next;
+    kthNode->next = NULL;
 }
 
 /**********************************************************************************/
-/* [1.12] Single Linked List: Insert nodes into Linked List in a sorted fashion   */
+/* [1.10] Single Linked List: Insert nodes into Linked List in a sorted fashion   */
 /**********************************************************************************/
 void listInsertSorted(struct node **head, struct node *new)
 {
@@ -275,7 +267,7 @@ void listInsertSorted(struct node **head, struct node *new)
 }
 
 /****************************************************************/
-/* [1.13] Single Linked List : Sort a Linked List               */
+/* [1.11] Single Linked List : Sort a Linked List               */
 /****************************************************************/
 void sort() {
    int i, j, k, tempKey, tempData;
@@ -308,7 +300,12 @@ void sort() {
 }
 
 /****************************************************************/
-/* [1.14] Single Linked List : Reverse a Linked List            */
+/* [1.12] Single Linked List : Reverse a Linked List            */
+/* Input : ->30->25->20->15->10->5
+  Reversed : ->5->10->15->20->25->30.
+  Cre­ate 3 nodes, cur­rN­ode, Pre­vN­ode and nextNode.
+  Ini­tial­ize them as cur­rN­ode = head; nextN­ode = null;pre­vN­ode = null;
+  Now keep revers­ing the point­ers one by one till currNode!=null.
 /****************************************************************/
 void reverse(struct node** head_ref) {
    struct node* prev   = NULL;
@@ -326,7 +323,7 @@ void reverse(struct node** head_ref) {
 }
 
 /****************************************************************/
-/* [1.15] Single Linked List : Recursive Reverse a Linked List  */
+/* [1.13] Single Linked List : Recursive Reverse a Linked List  */
 /****************************************************************/
 void recursiveReverse(struct node** head_ref)
 {
@@ -357,7 +354,7 @@ void recursiveReverse(struct node** head_ref)
 }
 
 /***********************************************************************/
-/* [1.16] Single Linked List : Move last node to front in linked list  */
+/* [1.14] Single Linked List : Move last node to front in linked list  */
 /* We are using a double pointer head_ref here because we change  
    head of the linked list inside this function.*/
 /***********************************************************************/
