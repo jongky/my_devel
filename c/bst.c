@@ -172,6 +172,23 @@ void shuffle(int *array, size_t n)
     }  
 }
 
+void BubbleSort(int DataArray[], int Length)
+
+{
+    int i = 0, j = 0, temp = 0;
+
+    for (i=0; i < Length-1; i++)
+    {
+        for (j=0; j < Length-(i+1); j++)
+        {
+            if (DataArray[j] > DataArray[j+1]) {
+                temp = DataArray[j+1];
+                DataArray[j+1] = DataArray[j];
+                DataArray[j] = temp;
+            }  
+        }
+    }
+}
 
 /*********************************************************/
 /* [1.0] Binary Search Tree: Main                        */
