@@ -152,11 +152,26 @@ reverse(node* root)
 }
 
 /*********************************************************/
-/* [1.9] Binary Search Tree: Shuffle Card Algorithm      */
+/* [1.9] Binary Search Tree: Reverse the Tree            */
+/* Given a non-empty binary search tree, 
+   return the minimum data value found in that tree      */
 /*********************************************************/
+int minValue(struct node* node) {
+  struct node* current = node;
+ 
+  /* loop down to find the leftmost leaf */
+  while (current->left != NULL) {
+    current = current->left;
+  }
+  return(current->data);
+}
+
+/*********************************************************/
+/* [1.10] Binary Search Tree: Shuffle Card Algorithm     */
 /* Arrange the N elements of ARRAY in random order. Only effective 
    if N is much smaller than RAND_MAX; if this may not be the case, 
    use a better random number generator. */ 
+/*********************************************************/
 void shuffle(int *array, size_t n) 
 { 
     if (n > 1) 
@@ -172,8 +187,10 @@ void shuffle(int *array, size_t n)
     }  
 }
 
+/*********************************************************/
+/* [1.11] Binary Search Tree: Shuffle Card Algorithm     */
+/*********************************************************/
 void BubbleSort(int DataArray[], int Length)
-
 {
     int i = 0, j = 0, temp = 0;
 

@@ -24,6 +24,43 @@ typedef struct tag_list*  PLIST;
 PLIST  dlhead = NULL, dltail = NULL;  
  
 
+/*********************************************************
+ * SingleLinkedList API list :
+ *========================================================
+1. printList
+2. Count
+3. isEmpty
+4. find
+5. insertFirst
+6. deleteFirst
+7. deleteWithKey
+8. deleteAll
+9. hasLoop
+10. rotate
+11. listInsertSorted
+12. sort
+13. reverse
+14. recursiveReverse
+15. MoveToFront 
+16. cloneLinkedList
+17. rearrange
+18. detectAndRemoveLoop
+19. mergeTwoSortedLists
+20. sortLInkedList
+*********************************************************/
+
+/*********************************************************
+ * DoubleLinkedList API list :
+ *========================================================
+ 1. printList
+2. Count
+3. isEmpty
+4. find
+5. insertFirst
+6. deleteFirst
+7. node_swap
+*********************************************************/
+
 /*********************************************************/
 /* [1.1] Single Linked List : display the list           */
 /*********************************************************/
@@ -58,48 +95,14 @@ int count(struct node *head, int item)
 }
 
 /****************************************************************/
-/* [1.3] Single Linked List : insert link at the first location */
-/****************************************************************/
-void insertFirst(int key, int data) {
-   //create a link
-   struct node *link = (struct node*) malloc(sizeof(struct node));
-    
-   link->key = key;
-   link->data = data;
-    
-   //point it to old first node
-   link->next = head;
-    
-   //point first to new first node
-   head = link;
-}
-
-/****************************************************************/
-/* [1.4] Single Linked List : delete first item                 */
-/****************************************************************/
-struct node* deleteFirst() {
-
-   //save reference to first link
-   struct node *tempLink = head;
-    
-   //mark next to first link as first 
-   head = head->next;
-    
-   //return the deleted link
-   return tempLink;
-}
-
-/****************************************************************/
-/* [1.4] Single Linked List : check it is empty                 */
+/* [1.3] Single Linked List : check it is empty                 */
 /****************************************************************/
 bool isEmpty() {
    return head == NULL;
 }
 
-
-
 /****************************************************************/
-/* [1.5] Single Linked List : find a link with given key        */
+/* [1.4] Single Linked List : find a link with given key        */
 /****************************************************************/
 struct node* find(int key) {
 
@@ -127,7 +130,39 @@ struct node* find(int key) {
 }
 
 /****************************************************************/
-/* [1.6] Single Linked List : delete a link with given key      */
+/* [1.5] Single Linked List : insert link at the first location */
+/****************************************************************/
+void insertFirst(int key, int data) {
+   //create a link
+   struct node *link = (struct node*) malloc(sizeof(struct node));
+    
+   link->key = key;
+   link->data = data;
+    
+   //point it to old first node
+   link->next = head;
+    
+   //point first to new first node
+   head = link;
+}
+
+/****************************************************************/
+/* [1.6] Single Linked List : delete first item                 */
+/****************************************************************/
+struct node* deleteFirst() {
+
+   //save reference to first link
+   struct node *tempLink = head;
+    
+   //mark next to first link as first 
+   head = head->next;
+    
+   //return the deleted link
+   return tempLink;
+}
+
+/****************************************************************/
+/* [1.7] Single Linked List : delete a link with given key      */
 /****************************************************************/
 struct node* delete(int key) {
 
@@ -166,7 +201,7 @@ struct node* delete(int key) {
 }
 
 /****************************************************************/
-/* [1.7] Single Linked List : Delete all the Linked List        */
+/* [1.8] Single Linked List : Delete all the Linked List        */
 /****************************************************************/
 void deleteList(struct node** head_ref)
 {
@@ -187,7 +222,7 @@ void deleteList(struct node** head_ref)
 }
 
 /****************************************************************/
-/* [1.8] Single Linked List : Find Loop in A Single Linked List */
+/* [1.9] Single Linked List : Find Loop in A Single Linked List */
 /****************************************************************/
 bool hasLoop(NODE *head)  
 {  
@@ -211,7 +246,7 @@ bool hasLoop(NODE *head)
 }
 
 /****************************************************************/
-/* [1.9] Single Linked List : Rotate Linked List by K nodes    */
+/* [1.10] Single Linked List : Rotate Linked List by K nodes    */
 /*   Given linked list   : 1 2 3 4 5                            */
 /*   Rotated Linked list : 3 4 5 1 2                            */
 /* 1) Traverse the list by k nodes.
@@ -243,64 +278,8 @@ rotate(struct node **head, int k)
     kthNode->next = NULL;
 }
 
-/**********************************************************************************/
-/* [1.10] Single Linked List: Insert nodes into Linked List in a sorted fashion   */
-/**********************************************************************************/
-void listInsertSorted(struct node **head, struct node *new)
-{
-    // Special Case for the head end
-    if (*head == NULL || (*head)->data >= new -> data) 
-    {
-        new->next = *head;
-        *head = new;
-    }
-    else
-    {   // locate the node before which the insertion is to happen !!
-        struct node * curr = *head;
-        while (curr->next != NULL && curr->next->data < new->data)
-        {
-            curr = curr->next;
-        }
-        new->next = curr->next; 
-        curr=new; 
-    }   
-}
-
 /****************************************************************/
-/* [1.11] Single Linked List : Sort a Linked List               */
-/****************************************************************/
-void sort() {
-   int i, j, k, tempKey, tempData;
-   struct node *current;
-   struct node *next;
-    
-   int size = length();
-   k = size ;
-    
-   for ( i = 0 ; i < size - 1 ; i++, k-- ) {
-      current = head;
-      next = head->next;
-        
-      for ( j = 1 ; j < k ; j++ ) {   
-        
-         if ( current->data > next->data ) {
-            tempData = current->data;
-            current->data = next->data;
-            next->data = tempData;
-
-            tempKey = current->key;
-            current->key = next->key;
-            next->key = tempKey;
-         }
-            
-         current = current->next;
-         next = next->next;
-      }
-   }   
-}
-
-/****************************************************************/
-/* [1.12] Single Linked List : Reverse a Linked List            */
+/* [1.11] Single Linked List : Reverse a Linked List            */
 /* Input : ->30->25->20->15->10->5
   Reversed : ->5->10->15->20->25->30.
   Cre­ate 3 nodes, cur­rN­ode, Pre­vN­ode and nextNode.
@@ -323,7 +302,7 @@ void reverse(struct node** head_ref) {
 }
 
 /****************************************************************/
-/* [1.13] Single Linked List : Recursive Reverse a Linked List  */
+/* [1.12] Single Linked List : Recursive Reverse a Linked List  */
 /****************************************************************/
 void recursiveReverse(struct node** head_ref)
 {
@@ -354,7 +333,7 @@ void recursiveReverse(struct node** head_ref)
 }
 
 /***********************************************************************/
-/* [1.14] Single Linked List : Move last node to front in linked list  */
+/* [1.13] Single Linked List : Move last node to front in linked list  */
 /* We are using a double pointer head_ref here because we change  
    head of the linked list inside this function.*/
 /***********************************************************************/
@@ -387,6 +366,276 @@ void moveToFront(struct node **head_ref)
   *head_ref = last; 
 } 
 
+/**********************************************************************************/
+/* [1.14] Single Linked List: Insert nodes into Linked List in a sorted fashion   */
+/**********************************************************************************/
+void listInsertSorted(struct node **head, struct node *new)
+{
+    // Special Case for the head end
+    if (*head == NULL || (*head)->data >= new -> data) 
+    {
+        new->next = *head;
+        *head = new;
+    }
+    else
+    {   // locate the node before which the insertion is to happen !!
+        struct node * curr = *head;
+        while (curr->next != NULL && curr->next->data < new->data)
+        {
+            curr = curr->next;
+        }
+        new->next = curr->next; 
+        curr=new; 
+    }   
+}
+
+/****************************************************************/
+/* [1.15] Single Linked List : Sort a Linked List               */
+/****************************************************************/
+void sort() {
+   int i, j, k, tempKey, tempData;
+   struct node *current;
+   struct node *next;
+    
+   int size = length();
+   k = size ;
+    
+   for ( i = 0 ; i < size - 1 ; i++, k-- ) {
+      current = head;
+      next = head->next;
+        
+      for ( j = 1 ; j < k ; j++ ) {   
+        
+         if ( current->data > next->data ) {
+            tempData = current->data;
+            current->data = next->data;
+            next->data = tempData;
+
+            tempKey = current->key;
+            current->key = next->key;
+            next->key = tempKey;
+         }
+            
+         current = current->next;
+         next = next->next;
+      }
+   }   
+}
+
+/****************************************************************/
+/* [1.16] Single Linked List : Clone Linked List                */
+/****************************************************************/
+Node * cloneLinkedList(Node * node){
+    if(!node) return NULL;
+    Node * current = node;
+ 
+    //First insert clone nodes in original linked list.     
+    while(current){
+        Node * currentNext = current->next;
+        current->next  =  createNode(current->value);
+        current->next->next = currentNext;
+        current = currentNext;
+    }
+    current = node;
+     
+    //Now copy arbit pointer of each node to cloned list
+    Node * cloneHead  = current->next;
+    while(current){
+        Node * clone = current->next;
+        if(current->random){
+            clone->random    = current->random->next;
+        }
+        current = clone->next;
+    }
+    current = node;
+     
+    //Segregate two linked list
+    while(current){
+        Node * clone  = current->next;
+        current->next = clone->next;
+        if(clone->next){
+            clone->next = clone->next->next;
+        }
+        current = current->next;
+    }
+    //return head pointer to the calling function
+    return cloneHead;
+}
+
+/****************************************************************/
+/* [1.17] Single Linked List : rearrange Linked List            */
+/*  Function to reverse all even positioned node and append at 
+    the end odd is the head node of given linked list           
+    Input List:  1->2->3->4->5->6
+    Output List: 1->3->5->6->4->2                               */
+/****************************************************************/
+void rearrange(struct node *odd)
+{
+    // If linked list has less than 3 nodes, no change is required
+    if (odd == NULL || odd->next == NULL || odd->next->next == NULL)
+        return;
+ 
+    // even points to the beginning of even list
+    struct node *even = odd->next;
+ 
+    // Remove the first even node
+    odd->next = odd->next->next;
+ 
+    // odd points to next node in odd list
+    odd = odd->next;
+ 
+    // Set terminator for even list
+    even->next = NULL;
+ 
+    // Traverse the  list
+    while (odd && odd->next)
+    {
+       // Store the next node in odd list
+       struct node *temp = odd->next->next;
+ 
+       // Link the next even node at the beginning of even list
+       odd->next->next = even;
+       even = odd->next;
+ 
+       // Remove the even node from middle
+       odd->next = temp;
+ 
+       // Move odd to the next odd node
+       if (temp != NULL)
+         odd = temp;
+    }
+ 
+    // Append the even list at the end of odd list
+    odd->next = even;
+}
+
+/*******************************************************************/
+/* [1.18] Single Linked List : Detect and removes loop Linked List */
+/* This function detects and removes loop in the list
+  If loop was there in the list then it returns 1,
+  otherwise returns 0                                              */
+/*******************************************************************/
+int detectAndRemoveLoop(struct node *list)
+{
+    struct node  *slow_p = list, *fast_p = list;
+ 
+    while (slow_p && fast_p && fast_p->next)
+    {
+        slow_p = slow_p->next;
+        fast_p  = fast_p->next->next;
+ 
+        /* If slow_p and fast_p meet at some point then there
+           is a loop */
+        if (slow_p == fast_p)
+        {
+            removeLoop(slow_p, list);
+ 
+            /* Return 1 to indicate that loop is found */
+            return 1;
+        }
+    }
+ 
+    /* Return 0 to indeciate that ther is no loop*/
+    return 0;
+}
+ 
+/* Function to remove loop.
+ loop_node --> Pointer to one of the loop nodes
+ head -->  Pointer to the start node of the linked list */
+void removeLoop(struct node *loop_node, struct node *head)
+{
+   struct node *ptr1;
+   struct node *ptr2;
+ 
+   /* Set a pointer to the beging of the Linked List and
+      move it one by one to find the first node which is
+      part of the Linked List */
+   ptr1 = head;
+   while (1)
+   {
+      /* Now start a pointer from loop_node and check if it ever
+       reaches ptr2 */
+      ptr2 = loop_node;
+      while (ptr2->next != loop_node && ptr2->next != ptr1)
+        ptr2 = ptr2->next;
+ 
+      /* If ptr2 reahced ptr1 then there is a loop. So break the
+        loop */
+      if (ptr2->next == ptr1)
+        break;
+ 
+      /* If ptr2 did't reach ptr1 then try the next node after ptr1 */
+      ptr1 = ptr1->next;
+   }
+ 
+   /* After the end of loop ptr2 is the last node of the loop. So
+     make next of ptr2 as NULL */
+   ptr2->next = NULL;
+}
+ 
+/*******************************************************************/
+/* [1.19] Single Linked List : Merge two sorted Linked List        */
+/* Given 2 Linked Lists sorted in Ascending Orider, 
+   merge lists into a single sorted list withou Copying the list 
+   contents.
+/*******************************************************************/
+ListNode* mergeTwoSortedLists(ListNode* pHead1, ListNode* pHead2)
+{
+    if(pHead1 == NULL)
+        return pHead2;
+    else if(pHead2 == NULL)
+        return pHead1;
+
+    ListNode* pMergedHead = NULL;
+    if(pHead1->m_nValue < pHead2->m_nValue)
+    {
+        pMergedHead = pHead1;
+        pMergedHead->m_pNext = mergeTwoSortedLists(pHead1->m_pNext, pHead2);
+    }
+    else
+    {
+        pMergedHead = pHead2;
+        pMergedHead->m_pNext = mergeTwoSortedLists(pHead1, pHead2->m_pNext);
+    }
+    return pMergedHead;
+}
+
+/*******************************************************************/
+/* [1.20] Single Linked List : Sort Linked List                    */
+/*******************************************************************/
+void SelectionSort(node *head)
+{
+    node *start = head;
+    node *traverse;
+    node *min;
+    
+    while(start->next)
+    {
+        min = start;
+        traverse = start->next;
+        
+        while(traverse)
+        {
+            /* Find minimum element from array */
+            if( min->data > traverse->data )
+            {
+                min = traverse;
+            }            
+            traverse = traverse->next;
+        }
+        swap(start,min);       
+        start = start->next;
+    }
+}
+
+/* swap data field of linked list */
+void swap(node *p1, node*p2)
+{
+    int temp = p1->data;
+    p1->data = p2->data;
+    p2->data = temp;
+}
+
 /***********************************************************************/
 /* [2.01] Double Linked List: Print the List                           */
 /***********************************************************************/
@@ -408,7 +657,7 @@ void PrintDLL()
 }
 
 /***********************************************************************/
-/* [2.03] Double Linked List: insert a node at the beginging           */
+/* [2.02] Double Linked List: insert a node at the beginging           */
 /***********************************************************************/
 void pushDLL(struct tag_list** head_ref, int new_data)
 {
@@ -435,7 +684,7 @@ void pushDLL(struct tag_list** head_ref, int new_data)
 }
 
 /***********************************************************************/
-/* [2.04] Double Linked List: insert a node at the Head                */
+/* [2.03] Double Linked List: insert a node at the Head                */
 /***********************************************************************/
 void AddHeadDLL( PLIST plist )
 {
@@ -454,7 +703,7 @@ void AddHeadDLL( PLIST plist )
 }
 
 /***********************************************************************/
-/* [2.05] Double Linked List: insert a node at the Tail                */
+/* [2.04] Double Linked List: insert a node at the Tail                */
 /***********************************************************************/
 void AddTailDLL( PLIST plist )
 {
@@ -472,7 +721,7 @@ void AddTailDLL( PLIST plist )
 }
 
 /***********************************************************************/
-/* [2.06] Double Linked List: reverse a Doubly Linked List             */
+/* [2.05] Double Linked List: reverse a Doubly Linked List             */
 /***********************************************************************/
 void reverseDLL(struct tag_list **head)
 {
@@ -495,7 +744,7 @@ void reverseDLL(struct tag_list **head)
 }   
 
 /***********************************************************************/
-/* [2.02] Double Linked List: Free the List                            */
+/* [2.06] Double Linked List: Free the List                            */
 /***********************************************************************/
 void FreeDoubleLinked()
 {
@@ -510,6 +759,24 @@ void FreeDoubleLinked()
     dlhead = dltail = NULL;      // 포인터 초기화, 재 사용 시 필요
 }
 
+/***********************************************************************/
+/* [2.07] Double Linked List: Swap 2 variables in a doubly linked list */                          */
+/***********************************************************************/
+void node_swap(struct s_node *left, struct s_node *right)
+{
+    struct s_node *tmp;
+
+    tmp = left->prev;
+    if (tmp)
+        tmp->next = right;
+    right->prev = tmp;
+
+    left->prev = right;
+    left->next = right->next;
+    right->next = left;
+    if(left->next != null)
+        left->next(which is X)->prev = left
+}
 
 /***********************************************************************/
 /* [1] Main for Single Linked List :                                   */
