@@ -46,11 +46,13 @@ PLIST  dlhead = NULL, dltail = NULL;
 13. reverse
 14. recursiveReverse
 15. MoveToFront 
-16. cloneLinkedList
+16. cloneLinkedListWithRandomPointer
 17. rearrange
 18. detectAndRemoveLoop
 19. mergeTwoSortedLists
-20. sortLInkedList
+20. blineMergeTwoLinkedList
+21. mergeAtAlternatePositions
+22. sortLInkedList
 *********************************************************/
 
 /*********************************************************
