@@ -814,6 +814,47 @@ void merge(struct node **ptr1,struct node **ptr2,struct node **ptr3)
 }
 
 /*******************************************************************/
+/* [1.21] Single Linked List : Merge two Linked List w/o Sort      */
+/* output of code:
+    1 3 5 7
+    2 4 6 
+    ===> 1 2 3 4 5 6 7                                             */
+/*******************************************************************/
+void merge()
+{
+    //Function to merge the two input linked list
+    struct node *temp1 = head1;
+    struct node *temp2 = head2;
+    //Use a new pointer variable temp1 and temp2
+    //Do not use the pointer variable head1 and head2 directly. If we use it, the address location of the first node in the two linked list will be lost
+
+    struct node *holder1 = NULL;
+    struct node *holder2 = NULL;
+    //Temporary pointer variables to store the address of next node of the two input linked list
+
+    while(temp1!=NULL && temp2!=NULL) 
+    {
+        //Executes until both temp1 and temp2 are not NULL
+
+        holder1=temp1->next;
+        //Storing the address of next node of first linked list
+
+        temp1->next=temp2;
+        //Making the first node of first linked list point to first node of second linked list
+
+        if(holder1!=NULL)     
+        {
+            //Making the first node of second linked list point to second node of first linked list
+            holder2=temp2->next;
+            temp2->next=holder1;
+        }             
+        temp1=holder1;
+        temp2=holder2;  
+        //Updating the address location of two pointer variables temp1 and temp2
+    }
+}
+
+/*******************************************************************/
 /* [1.20] Single Linked List : Sort Linked List                    */
 /*******************************************************************/
 void SelectionSort(node *head)
