@@ -417,7 +417,7 @@ NODE* sort(NODE *s)//to place elements in increasing order
 }
 
 /****************************************************************/
-/* [1.16.1] Single Linked List : Clone Linked List              */
+/* [1.16.1] Single Linked List : Clone Linked List with Random Pointer              */
 /****************************************************************/
 struct list *createNode(int val)
 {
@@ -428,16 +428,16 @@ struct list *createNode(int val)
     return newnode;
 }
 
-Node * cloneLinkedList(Node * node){
+Node * cloneLinkedListWithRandomePointer(Node * node){
     if(!node) return NULL;
     Node * current = node;
  
     //Step1 : First insert clone nodes in original linked list.     
     while(current){
-        Node * currentNext = current->next;
+        Node * temp = current->next;
         current->next  =  createNode(current->value);
-        current->next->next = currentNext;
-        current = currentNext;
+        current->next->next = temp;
+        current = temp;
     }
     current = node;
      
@@ -558,8 +558,7 @@ list* copy_list(list* root)
             tmp->next = tmp->next->next;
             tmp = tmp->next;
         }        
-    }
-    
+    }    
     return res;
 }
 
@@ -695,33 +694,33 @@ int detectAndRemoveLoop(struct node *list)
  head -->  Pointer to the start node of the linked list */
 void removeLoop(struct node *loop_node, struct node *head)
 {
-   struct node *ptr1;
-   struct node *ptr2;
+   struct node *p1;
+   struct node *p2;
  
    /* Set a pointer to the beging of the Linked List and
       move it one by one to find the first node which is
       part of the Linked List */
-   ptr1 = head;
+   p1 = head;
    while (1)
    {
       /* Now start a pointer from loop_node and check if it ever
-       reaches ptr2 */
-      ptr2 = loop_node;
-      while (ptr2->next != loop_node && ptr2->next != ptr1)
-        ptr2 = ptr2->next;
+       reaches p2 */
+      p2 = loop_node;
+      while (p2->next != loop_node && p2->next != p1)
+        p2 = p2->next;
  
-      /* If ptr2 reahced ptr1 then there is a loop. So break the
+      /* If p2 reahced p1 then there is a loop. So break the
         loop */
-      if (ptr2->next == ptr1)
+      if (p2->next == p1)
         break;
  
-      /* If ptr2 did't reach ptr1 then try the next node after ptr1 */
-      ptr1 = ptr1->next;
+      /* If p2 did't reach p1 then try the next node after p1 */
+      p1 = p1->next;
    }
  
-   /* After the end of loop ptr2 is the last node of the loop. So
-     make next of ptr2 as NULL */
-   ptr2->next = NULL;
+   /* After the end of loop p2 is the last node of the loop. So
+     make next of p2 as NULL */
+   p2->next = NULL;
 }
 
 void detectAndRemoveLoop(Node *head)
@@ -758,26 +757,29 @@ void detectAndRemoveLoop(Node *head)
 /* Given 2 Linked Lists sorted in Ascending Orider, 
    merge lists into a single sorted list withou Copying the list 
    contents.
+   Linked list p1 is : 1 3 5 9
+   Linked list p2 is : 2 4 5 6 10
+   Merged Linked list p3 is : 1 2 3 4 5 5 6 9 10
 /*******************************************************************/
-ListNode* mergeTwoSortedLists(ListNode* pHead1, ListNode* pHead2)
+ListNode* mergeTwoSortedLists(ListNode* p1, ListNode* p2)
 {
-    if(pHead1 == NULL)
-        return pHead2;
-    else if(pHead2 == NULL)
-        return pHead1;
+    if(p1 == NULL)
+        return p2;
+    else if(p2 == NULL)
+        return p1;
 
-    ListNode* pMergedHead = NULL;
-    if(pHead1->m_nValue < pHead2->m_nValue)
+    ListNode* p3 = NULL;
+    if(p1->data < p2->data)
     {
-        pMergedHead = pHead1;
-        pMergedHead->m_pNext = mergeTwoSortedLists(pHead1->m_pNext, pHead2);
+        p3 = p1;
+        p3->next = mergeTwoSortedLists(p1->next, p2);
     }
     else
     {
-        pMergedHead = pHead2;
-        pMergedHead->m_pNext = mergeTwoSortedLists(pHead1, pHead2->m_pNext);
+        p3 = p2;
+        p3->next = mergeTwoSortedLists(p1, p2->next);
     }
-    return pMergedHead;
+    return p3;
 }
 
 /*******************************************************************/
@@ -787,34 +789,59 @@ ListNode* mergeTwoSortedLists(ListNode* pHead1, ListNode* pHead2)
     15 30 88
     ===> 23 3 78 51 90 15 30 88                                    */
 /*******************************************************************/
-void merge(struct node **ptr1,struct node **ptr2,struct node **ptr3)
+void blindMerge(struct node **p1,struct node **p2,struct node **p3)
 {
     struct node *temp;
-    if(*ptr2==NULL && ptr1!=NULL)   // if second list dosent exist
+    if(*p2==NULL && p1!=NULL)   // if second list dosent exist
     {
-        *ptr3=*ptr1;
+        *p3=*p1;
         return;
-    }
- 
-    else if(*ptr1==NULL && ptr2!=NULL)    // if first list dosent exist
+    } 
+    else if(*p1==NULL && p2!=NULL)    // if first list dosent exist
     {
-        *ptr3=*ptr2;
+        *p3=*p2;
         return ;
     }
- 
-    else if(*ptr1==NULL && ptr2==NULL)
-    {
-        return;
-    }
-    *ptr3=*ptr1;
-    temp=*ptr1;
+
+    *p3=*p1;
+    temp=*p1;
     while(temp->next!=NULL)
         temp=temp->next;
-    temp->next=*ptr2;
+    temp->next=*p2;
+    *p3 = temp;
 }
 
 /*******************************************************************/
-/* [1.21] Single Linked List : Merge two Linked List w/o Sort      */
+/* [1.21] Single Linked List : Merge a list into another at 
+          alternate position    */
+/* output of code:
+    L1 = 3->4->6->7->NULL
+    L2 = 1->8->10->NULL
+    Result = 3->1->4->8->6->10->7->NULL                                     */
+/*******************************************************************/
+Node * mergeAtAlternatePositions(Node *a, Node *b)
+{
+    Node *aCurr = a;
+    Node *bCurr = b;
+ 
+    while (aCurr && bCurr) {
+        Node *aNext = aCurr->next;
+        Node *bNext = bCurr->next;
+ 
+        //Point next pointer of list a to node in list b
+        bCurr->next = aCurr->next;
+        //Point next pointer of list b to node in list a
+        aCurr->next = bCurr;
+ 
+        //Now advance pointers to next nodes
+        aCurr = aNext;
+        bCurr = bNext;
+    }
+    return a;
+}
+
+/*******************************************************************/
+/* [1.22] Single Linked List : Merge two Linked List w/o Sort      */
 /* output of code:
     1 3 5 7
     2 4 6 
@@ -855,7 +882,7 @@ void merge()
 }
 
 /*******************************************************************/
-/* [1.20] Single Linked List : Sort Linked List                    */
+/* [1.23] Single Linked List : Sort Linked List                    */
 /*******************************************************************/
 void SelectionSort(node *head)
 {
