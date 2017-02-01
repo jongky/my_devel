@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+/******************************************************************
+/* Sites for Top 10 Algorithms 
+   1. http://www.programcreek.com/2012/11/top-10-algorithms-for-coding-interview/
+*******************************************************************/
 struct node {
    int data;
    int key;
@@ -52,7 +56,7 @@ PLIST  dlhead = NULL, dltail = NULL;
 /*********************************************************
  * DoubleLinkedList API list :
  *========================================================
- 1. printList
+1. printList
 2. Count
 3. isEmpty
 4. find
@@ -392,44 +396,43 @@ void listInsertSorted(struct node **head, struct node *new)
 /****************************************************************/
 /* [1.15] Single Linked List : Sort a Linked List               */
 /****************************************************************/
-void sort() {
-   int i, j, k, tempKey, tempData;
-   struct node *current;
-   struct node *next;
-    
-   int size = length();
-   k = size ;
-    
-   for ( i = 0 ; i < size - 1 ; i++, k-- ) {
-      current = head;
-      next = head->next;
-        
-      for ( j = 1 ; j < k ; j++ ) {   
-        
-         if ( current->data > next->data ) {
-            tempData = current->data;
-            current->data = next->data;
-            next->data = tempData;
+NODE* sort(NODE *s)//to place elements in increasing order
+{
+  NODE *t1,*t2;
+  int temp;
 
-            tempKey = current->key;
-            current->key = next->key;
-            next->key = tempKey;
-         }
-            
-         current = current->next;
-         next = next->next;
+  for(t1 = s;t1->next != NULL;t1=t1->next)
+  {
+    for(t2 = t1->next;t2 != NULL;t2=t2->next)
+    {
+      if(t1->data > t2->data)
+      {
+        temp = t1->data;
+        t1->data = t2->data;
+        t2->data =temp;
       }
-   }   
+    } 
+  }
+  return s;
 }
 
 /****************************************************************/
 /* [1.16] Single Linked List : Clone Linked List                */
 /****************************************************************/
+struct list *createNode(int val)
+{
+    struct list* newnode = (struct list*)malloc(sizeof(struct list));
+    newnode->val =  val;
+    newnode->next = NULL;
+    newnode->arbit = NULL;
+    return newnode;
+}
+
 Node * cloneLinkedList(Node * node){
     if(!node) return NULL;
     Node * current = node;
  
-    //First insert clone nodes in original linked list.     
+    //Step1 : First insert clone nodes in original linked list.     
     while(current){
         Node * currentNext = current->next;
         current->next  =  createNode(current->value);
@@ -438,18 +441,18 @@ Node * cloneLinkedList(Node * node){
     }
     current = node;
      
-    //Now copy arbit pointer of each node to cloned list
+    //Step2 : Now copy arbit pointer of each node to cloned list
     Node * cloneHead  = current->next;
     while(current){
         Node * clone = current->next;
         if(current->random){
-            clone->random    = current->random->next;
+            clone->random= current->random->next;
         }
         current = clone->next;
     }
     current = node;
      
-    //Segregate two linked list
+    //Step 3: Segregate two linked list
     while(current){
         Node * clone  = current->next;
         current->next = clone->next;
@@ -460,6 +463,31 @@ Node * cloneLinkedList(Node * node){
     }
     //return head pointer to the calling function
     return cloneHead;
+}
+
+/* [1.16-1] Single Linked List : Copy Linked List */
+struct node *copy(struct node *org)
+{
+  struct node *new=NULL,**tail = &new;
+
+  for( ;org; org = org->next) {
+    *tail = malloc (sizeof **tail );
+    (*tail)->data = org->data;
+    (*tail)->next = NULL;
+    tail = &(*tail)->next;
+  }
+  return new;
+}
+
+/* [1.16-2] Single Linked List : Copy Linked List with Recursion */
+Node* Clone(Node* list) 
+{
+    if (list == NULL) return NULL;
+
+    Node* result  = new Node;
+    result->value = list->value;
+    result->next  = Clone(list->next);
+    return result;
 }
 
 /****************************************************************/
@@ -572,7 +600,36 @@ void removeLoop(struct node *loop_node, struct node *head)
      make next of ptr2 as NULL */
    ptr2->next = NULL;
 }
+
+void detectAndRemoveLoop(Node *head)
+{
+    Node *slow = head;
+    Node *fast = head->next;
  
+    // Search for loop using slow and fast pointers
+    while (fast && fast->next)
+    {
+        if (slow == fast)
+            break;
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+ 
+    /* If loop exists */
+    if (slow == fast)
+    {
+        slow = head;
+        while (slow != fast->next)
+        {
+            slow = slow->next;
+            fast = fast->next;
+        }
+ 
+        /* since fast->next is the looping point */
+        fast->next = NULL; /* remove loop */
+    }
+}
+
 /*******************************************************************/
 /* [1.19] Single Linked List : Merge two sorted Linked List        */
 /* Given 2 Linked Lists sorted in Ascending Orider, 
@@ -760,7 +817,7 @@ void FreeDoubleLinked()
 }
 
 /***********************************************************************/
-/* [2.07] Double Linked List: Swap 2 variables in a doubly linked list */                          */
+/* [2.07] Double Linked List: Swap 2 variables in a doubly linked list */                          
 /***********************************************************************/
 void node_swap(struct s_node *left, struct s_node *right)
 {
