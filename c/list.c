@@ -417,14 +417,14 @@ NODE* sort(NODE *s)//to place elements in increasing order
 }
 
 /****************************************************************/
-/* [1.16] Single Linked List : Clone Linked List                */
+/* [1.16.1] Single Linked List : Clone Linked List              */
 /****************************************************************/
 struct list *createNode(int val)
 {
     struct list* newnode = (struct list*)malloc(sizeof(struct list));
     newnode->val =  val;
     newnode->next = NULL;
-    newnode->arbit = NULL;
+    newnode->random = NULL;
     return newnode;
 }
 
@@ -441,7 +441,7 @@ Node * cloneLinkedList(Node * node){
     }
     current = node;
      
-    //Step2 : Now copy arbit pointer of each node to cloned list
+    //Step2 : Now copy random pointer of each node to cloned list
     Node * cloneHead  = current->next;
     while(current){
         Node * clone = current->next;
@@ -488,6 +488,79 @@ Node* Clone(Node* list)
     result->value = list->value;
     result->next  = Clone(list->next);
     return result;
+}
+
+/************************************************************************/
+/* [1.16.2] Single Linked List : Clone Linked List with Random Pointer  */
+/*
+1) Create the copy of every node in the list and insert it in original list between current and next node.
+    create the copy of A and insert it between A & B..
+    create the copy of B and insert it between B & C..
+    Continue in this fashion, add the copy of N to Nth node.
+
+As a result of this exercise, we will get a list like shown below:
+AABBCCDDEEFF
+
+2) Now copy the randomrary link in this fashion
+
+    original->next->random = original->random->next;
+    Traverse two nodes in every iteration
+This works because original->next is nothing but copy of original and Original->random->next is nothing but copy of random.
+
+3) Now restore the original and copy linked lists in this fashion in a single loop.
+original->next = original->next->next;
+copy->next = copy->next->next;
+
+While doing this, take care of end of list (NULL pointer) and NULL pointer dereference.
+
+So in this manner, we are copying the list in O(n) time and O(1) space complexity.
+Code:
+/************************************************************************/
+list* copy_list(list* root)
+{
+    list *res;
+    
+    list* cur = root;
+    list *next, *tmp;
+    
+    //Create the copy of every node in the list and insert 
+    //it in original list between current and next node. 
+    while(cur)
+    {
+        tmp = new(list);
+        tmp->val = cur->val;
+        tmp->random = NULL;
+        tmp->next = cur->next;
+        next = cur->next;
+        cur->next = tmp;
+        cur = next;        
+    }
+      
+    //save result pointer    
+    res = root->next;
+    
+    //Copy the randomrary link for result
+    cur = root;    
+    while(cur)
+    {
+        cur->next->random = cur->random->next;
+        cur = cur->next->next;  //move 2 nodes at a time
+    }
+    
+    //restore the original and copy linked lists
+    cur = root;    
+    tmp = root->next;
+    while(cur && tmp)
+    {
+        cur->next = cur->next->next;
+        cur = cur->next;
+        if (tmp->next){
+            tmp->next = tmp->next->next;
+            tmp = tmp->next;
+        }        
+    }
+    
+    return res;
 }
 
 /****************************************************************/
@@ -537,6 +610,56 @@ void rearrange(struct node *odd)
     odd->next = even;
 }
 
+// Rearranges given linked list such that all even
+// positioned nodes are before odd positioned.
+// Returns new head of linked List.
+Node *rearrangeEvenOdd(Node *head)
+{
+    // Corner case
+    if (head == NULL)
+        return NULL;
+ 
+    // Initialize first nodes of even and
+    // odd lists
+    Node *odd = head;
+    Node *even = head->next;
+ 
+    // Remember the first node of even list so
+    // that we can connect the even list at the
+    // end of odd list.
+    Node *evenFirst = even;
+ 
+    while (1)
+    {
+        // If there are no more nodes, then connect
+        // first node of even list to the last node
+        // of odd list
+        if (!odd || !even || !(even->next))
+        {
+            odd->next = evenFirst;
+            break;
+        }
+ 
+        // Connecting odd nodes
+        odd->next = even->next;
+        odd = even->next;
+ 
+        // If there are NO more even nodes after
+        // current odd.
+        if (odd->next == NULL)
+        {
+            even->next = NULL;
+            odd->next = evenFirst;
+            break;
+        }
+ 
+        // Connecting even nodes
+        even->next = odd->next;
+        even = odd->next;
+    }
+ 
+    return head;
+}
 /*******************************************************************/
 /* [1.18] Single Linked List : Detect and removes loop Linked List */
 /* This function detects and removes loop in the list
@@ -655,6 +778,39 @@ ListNode* mergeTwoSortedLists(ListNode* pHead1, ListNode* pHead2)
         pMergedHead->m_pNext = mergeTwoSortedLists(pHead1, pHead2->m_pNext);
     }
     return pMergedHead;
+}
+
+/*******************************************************************/
+/* [1.20] Single Linked List : Merge two Linked List w/o Sort      */
+/* output of code:
+    23 3 78 51 90
+    15 30 88
+    ===> 23 3 78 51 90 15 30 88                                    */
+/*******************************************************************/
+void merge(struct node **ptr1,struct node **ptr2,struct node **ptr3)
+{
+    struct node *temp;
+    if(*ptr2==NULL && ptr1!=NULL)   // if second list dosent exist
+    {
+        *ptr3=*ptr1;
+        return;
+    }
+ 
+    else if(*ptr1==NULL && ptr2!=NULL)    // if first list dosent exist
+    {
+        *ptr3=*ptr2;
+        return ;
+    }
+ 
+    else if(*ptr1==NULL && ptr2==NULL)
+    {
+        return;
+    }
+    *ptr3=*ptr1;
+    temp=*ptr1;
+    while(temp->next!=NULL)
+        temp=temp->next;
+    temp->next=*ptr2;
 }
 
 /*******************************************************************/
