@@ -38,21 +38,22 @@ PLIST  dlhead = NULL, dltail = NULL;
 5. insertFirst
 6. deleteFirst
 7. deleteWithKey
-8. deleteAll
+8. deleteList
 9. hasLoop
-10. rotate
-11. listInsertSorted
-12. sort
-13. reverse
-14. recursiveReverse
-15. MoveToFront 
-16. cloneLinkedListWithRandomPointer
+10. sort
+11. rotate
+12. reverse
+13. recursiveReverse
+14. moveToFront 
+15. listInsertSorted
+16. cloneListWithRandomPointer
 17. rearrange
-18. detectAndRemoveLoop
-19. mergeTwoSortedLists
-20. blineMergeTwoLinkedList
-21. mergeAtAlternatePositions
-22. sortLInkedList
+18. Reverse alternate K nodes
+19. detectAndRemoveLoop
+20. mergeTwoSortedLists
+21. blineMergeTwoLinkedList
+22. mergeAtAlternatePositions
+23. sortLInkedList
 *********************************************************/
 
 /*********************************************************
@@ -170,7 +171,7 @@ struct node* deleteFirst() {
 /****************************************************************/
 /* [1.7] Single Linked List : delete a link with given key      */
 /****************************************************************/
-struct node* delete(int key) {
+struct node* deleteWithKey(int key) {
 
    //start from the first link
    struct node* current = head;
@@ -418,82 +419,8 @@ NODE* sort(NODE *s)//to place elements in increasing order
   return s;
 }
 
-/****************************************************************/
-/* [1.16.1] Single Linked List : Clone Linked List with Random Pointer              */
-/****************************************************************/
-struct list *createNode(int val)
-{
-    struct list* newnode = (struct list*)malloc(sizeof(struct list));
-    newnode->val =  val;
-    newnode->next = NULL;
-    newnode->random = NULL;
-    return newnode;
-}
-
-Node * cloneLinkedListWithRandomePointer(Node * node){
-    if(!node) return NULL;
-    Node * current = node;
- 
-    //Step1 : First insert clone nodes in original linked list.     
-    while(current){
-        Node * temp = current->next;
-        current->next  =  createNode(current->value);
-        current->next->next = temp;
-        current = temp;
-    }
-    current = node;
-     
-    //Step2 : Now copy random pointer of each node to cloned list
-    Node * cloneHead  = current->next;
-    while(current){
-        Node * clone = current->next;
-        if(current->random){
-            clone->random= current->random->next;
-        }
-        current = clone->next;
-    }
-    current = node;
-     
-    //Step 3: Segregate two linked list
-    while(current){
-        Node * clone  = current->next;
-        current->next = clone->next;
-        if(clone->next){
-            clone->next = clone->next->next;
-        }
-        current = current->next;
-    }
-    //return head pointer to the calling function
-    return cloneHead;
-}
-
-/* [1.16-1] Single Linked List : Copy Linked List */
-struct node *copy(struct node *org)
-{
-  struct node *new=NULL,**tail = &new;
-
-  for( ;org; org = org->next) {
-    *tail = malloc (sizeof **tail );
-    (*tail)->data = org->data;
-    (*tail)->next = NULL;
-    tail = &(*tail)->next;
-  }
-  return new;
-}
-
-/* [1.16-2] Single Linked List : Copy Linked List with Recursion */
-Node* Clone(Node* list) 
-{
-    if (list == NULL) return NULL;
-
-    Node* result  = new Node;
-    result->value = list->value;
-    result->next  = Clone(list->next);
-    return result;
-}
-
 /************************************************************************/
-/* [1.16.2] Single Linked List : Clone Linked List with Random Pointer  */
+/* [1.16] Single Linked List : Clone Linked List with Random Pointer  */
 /*
 1) Create the copy of every node in the list and insert it in original list between current and next node.
     create the copy of A and insert it between A & B..
@@ -518,7 +445,7 @@ While doing this, take care of end of list (NULL pointer) and NULL pointer deref
 So in this manner, we are copying the list in O(n) time and O(1) space complexity.
 Code:
 /************************************************************************/
-list* copy_list(list* root)
+list* cloneListWithRandomPointer(list* root)
 {
     list *res;
     
@@ -564,13 +491,26 @@ list* copy_list(list* root)
     return res;
 }
 
-/****************************************************************/
-/* [1.17] Single Linked List : rearrange Linked List            */
-/*  Function to reverse all even positioned node and append at 
-    the end odd is the head node of given linked list           
+/*******************************************************************/
+/* [1.17] Single Linked List : rearrange Linked List                
+   reverse alternate nodes and append at the end                   */
+/* Example:
     Input List:  1->2->3->4->5->6
-    Output List: 1->3->5->6->4->2                               */
-/****************************************************************/
+    Output List: 1->3->5->6->4->2
+    Input List:  12->14->16->18->20
+    Output List: 12->16->20->18->14
+
+  The idea is to maintain two linked lists, one list of all odd 
+  positioned nodes (1, 3, 5 in above example) and other list of 
+  all even positioned nodes (6, 4 and 2 in above example). 
+  Following are detailed steps.
+  1) Traverse the given linked list which is considered as odd list. 
+      Do following for every visited node.  
+      a) If the node is even node, remove it from odd list and 
+         add it to the front of even node list. 
+         Nodes are added at front to keep the reverse order.
+  2) Append the even node list at the end of odd node list. 
+/*******************************************************************/
 void rearrange(struct node *odd)
 {
     // If linked list has less than 3 nodes, no change is required
@@ -581,24 +521,21 @@ void rearrange(struct node *odd)
     struct node *even = odd->next;
  
     // Remove the first even node
-    odd->next = odd->next->next;
- 
+    odd->next = odd->next->next; 
     // odd points to next node in odd list
     odd = odd->next;
- 
     // Set terminator for even list
     even->next = NULL;
  
     // Traverse the  list
     while (odd && odd->next)
     {
-       // Store the next node in odd list
+       // Store the next node in odd list 
        struct node *temp = odd->next->next;
  
        // Link the next even node at the beginning of even list
        odd->next->next = even;
-       even = odd->next;
- 
+       even = odd->next; 
        // Remove the even node from middle
        odd->next = temp;
  
@@ -611,58 +548,63 @@ void rearrange(struct node *odd)
     odd->next = even;
 }
 
-// Rearranges given linked list such that all even
-// positioned nodes are before odd positioned.
-// Returns new head of linked List.
-Node *rearrangeEvenOdd(Node *head)
+/*******************************************************************/
+/* [1.18] Single Linked List : Reverse alternate K nodes           */
+/* Example:
+   Inputs:   1->2->3->4->5->6->7->8->9->NULL and k = 3
+   Output:   3->2->1->4->5->6->9->8->7->NULL. 
+   Method 1 (Process 2k nodes and recursively call for rest of the list)
+
+kAltReverse(struct node *head, int k)
+  1)  Reverse first k nodes.
+  2)  In the modified list head points to the kth node.  So change next 
+       of head to (k+1)th node
+  3)  Move the current pointer to skip next k nodes.
+  4)  Call the kAltReverse() recursively for rest of the n - 2k nodes.
+  5)  Return new head of the list.
+/*******************************************************************/
+struct node *kAltReverse(struct node *head, int k)
 {
-    // Corner case
-    if (head == NULL)
-        return NULL;
+    struct node* current = head;
+    struct node* next;
+    struct node* prev = NULL;
+    int count = 0;   
  
-    // Initialize first nodes of even and
-    // odd lists
-    Node *odd = head;
-    Node *even = head->next;
- 
-    // Remember the first node of even list so
-    // that we can connect the even list at the
-    // end of odd list.
-    Node *evenFirst = even;
- 
-    while (1)
+    /*1) reverse first k nodes of the linked list */
+    while (current != NULL && count < k)
     {
-        // If there are no more nodes, then connect
-        // first node of even list to the last node
-        // of odd list
-        if (!odd || !even || !(even->next))
-        {
-            odd->next = evenFirst;
-            break;
-        }
+       next  = current->next;
+       current->next = prev;
+       prev = current;
+       current = next;
+       count++;
+    }
+   
+    /* 2) Now head points to the kth node.  So change next 
+       of head to (k+1)th node*/
+    if(head != NULL)
+      head->next = current;   
  
-        // Connecting odd nodes
-        odd->next = even->next;
-        odd = even->next;
- 
-        // If there are NO more even nodes after
-        // current odd.
-        if (odd->next == NULL)
-        {
-            even->next = NULL;
-            odd->next = evenFirst;
-            break;
-        }
- 
-        // Connecting even nodes
-        even->next = odd->next;
-        even = odd->next;
+    /* 3) We do not want to reverse next k nodes. So move the current 
+        pointer to skip next k nodes */
+    count = 0;
+    while(count < k-1 && current != NULL )
+    {
+      current = current->next;
+      count++;
     }
  
-    return head;
+    /* 4) Recursively call for the list starting from current->next.
+       And make rest of the list as next of first node */
+    if(current !=  NULL)
+       current->next = kAltReverse(current->next, k); 
+ 
+    /* 5) prev is new head of the input list */
+    return prev;
 }
+
 /*******************************************************************/
-/* [1.18] Single Linked List : Detect and removes loop Linked List */
+/* [1.19] Single Linked List : Detect and removes loop Linked List */
 /* This function detects and removes loop in the list
   If loop was there in the list then it returns 1,
   otherwise returns 0                                              */
@@ -685,8 +627,7 @@ int detectAndRemoveLoop(struct node *list)
             /* Return 1 to indicate that loop is found */
             return 1;
         }
-    }
- 
+    } 
     /* Return 0 to indeciate that ther is no loop*/
     return 0;
 }
@@ -748,14 +689,13 @@ void detectAndRemoveLoop(Node *head)
             slow = slow->next;
             fast = fast->next;
         }
- 
         /* since fast->next is the looping point */
         fast->next = NULL; /* remove loop */
     }
 }
 
 /*******************************************************************/
-/* [1.19] Single Linked List : Merge two sorted Linked List        */
+/* [1.20] Single Linked List : Merge two sorted Linked List        */
 /* Given 2 Linked Lists sorted in Ascending Orider, 
    merge lists into a single sorted list withou Copying the list 
    contents.
@@ -785,7 +725,7 @@ ListNode* mergeTwoSortedLists(ListNode* p1, ListNode* p2)
 }
 
 /*******************************************************************/
-/* [1.20] Single Linked List : Merge two Linked List w/o Sort      */
+/* [1.21] Single Linked List : Merge two Linked List w/o Sort      */
 /* output of code:
     23 3 78 51 90
     15 30 88
@@ -814,7 +754,7 @@ void blindMerge(struct node **p1,struct node **p2,struct node **p3)
 }
 
 /*******************************************************************/
-/* [1.21] Single Linked List : Merge a list into another at 
+/* [1.22] Single Linked List : Merge a list into another at 
           alternate position    */
 /* output of code:
     L1 = 3->4->6->7->NULL
@@ -843,7 +783,7 @@ Node * mergeAtAlternatePositions(Node *a, Node *b)
 }
 
 /*******************************************************************/
-/* [1.22] Single Linked List : Merge two Linked List w/o Sort      */
+/* [1.23] Single Linked List : Merge two Linked List w/o Sort      */
 /* output of code:
     1 3 5 7
     2 4 6 
@@ -864,10 +804,8 @@ void merge()
     while(temp1!=NULL && temp2!=NULL) 
     {
         //Executes until both temp1 and temp2 are not NULL
-
         holder1=temp1->next;
         //Storing the address of next node of first linked list
-
         temp1->next=temp2;
         //Making the first node of first linked list point to first node of second linked list
 
@@ -883,41 +821,6 @@ void merge()
     }
 }
 
-/*******************************************************************/
-/* [1.23] Single Linked List : Sort Linked List                    */
-/*******************************************************************/
-void SelectionSort(node *head)
-{
-    node *start = head;
-    node *traverse;
-    node *min;
-    
-    while(start->next)
-    {
-        min = start;
-        traverse = start->next;
-        
-        while(traverse)
-        {
-            /* Find minimum element from array */
-            if( min->data > traverse->data )
-            {
-                min = traverse;
-            }            
-            traverse = traverse->next;
-        }
-        swap(start,min);       
-        start = start->next;
-    }
-}
-
-/* swap data field of linked list */
-void swap(node *p1, node*p2)
-{
-    int temp = p1->data;
-    p1->data = p2->data;
-    p2->data = temp;
-}
 
 /***********************************************************************/
 /* [2.01] Double Linked List: Print the List                           */
