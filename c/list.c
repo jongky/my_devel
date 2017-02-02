@@ -422,7 +422,8 @@ NODE* sort(NODE *s)//to place elements in increasing order
 /************************************************************************/
 /* [1.16] Single Linked List : Clone Linked List with Random Pointer  */
 /*
-1) Create the copy of every node in the list and insert it in original list between current and next node.
+1) Create the copy of every node in the list and insert it in original 
+   list between current and next node.
     create the copy of A and insert it between A & B..
     create the copy of B and insert it between B & C..
     Continue in this fashion, add the copy of N to Nth node.
@@ -434,7 +435,8 @@ AABBCCDDEEFF
 
     original->next->random = original->random->next;
     Traverse two nodes in every iteration
-This works because original->next is nothing but copy of original and Original->random->next is nothing but copy of random.
+This works because original->next is nothing but copy of original and 
+Original->random->next is nothing but copy of random.
 
 3) Now restore the original and copy linked lists in this fashion in a single loop.
 original->next = original->next->next;
@@ -795,11 +797,9 @@ void merge()
     struct node *temp1 = head1;
     struct node *temp2 = head2;
     //Use a new pointer variable temp1 and temp2
-    //Do not use the pointer variable head1 and head2 directly. If we use it, the address location of the first node in the two linked list will be lost
 
     struct node *holder1 = NULL;
     struct node *holder2 = NULL;
-    //Temporary pointer variables to store the address of next node of the two input linked list
 
     while(temp1!=NULL && temp2!=NULL) 
     {
