@@ -4,6 +4,91 @@
 #include <stdbool.h>
 
 /*******************************************************************/
+/* [01] Pointers.1 : Basic                                         */
+/*  Results :
+    Address of var variable: bffd8b3c
+    Address stored in ip variable: bffd8b3c
+    Value of *ip variable: 20                                      */
+/*******************************************************************/
+int main () 
+{
+
+   int  var = 20;   /* actual variable declaration */
+   int  *ip;        /* pointer variable declaration */
+
+   ip = &var;  /* store address of var in pointer variable*/
+
+   printf("Address of var variable: %x\n", &var  );
+   /* address stored in pointer variable */
+   printf("Address stored in ip variable: %x\n", ip );
+   /* access the value using the pointer */
+   printf("Value of *ip variable: %d\n", *ip );
+   return 0;
+}
+
+/*******************************************************************/
+/* [01] Pointers.2 : Basic                                         */
+/*  Results :
+    strcpy( str3, str1) :  Hello
+    strcat( str1, str2):   HelloWorld
+    strlen(str1) :  10                                             */
+/*******************************************************************/
+int main () 
+{
+
+   char str1[12] = "Hello";
+   char str2[12] = "World";
+   char str3[12];
+   int  len ;
+
+   /* copy str1 into str3 */
+   strcpy(str3, str1);
+   printf("strcpy( str3, str1) :  %s\n", str3 );
+
+   /* concatenates str1 and str2 */
+   strcat( str1, str2);
+   printf("strcat( str1, str2):   %s\n", str1 );
+
+   /* total lenghth of str1 after concatenation */
+   len = strlen(str1);
+   printf("strlen(str1) :  %d\n", len );
+
+   return 0;
+}
+/*******************************************************************/
+/* [02] String.1 : Basic                                           */
+/*******************************************************************/
+size_t my_strlen(const char* str)
+{
+  if (str == NULL) {
+    return 0;
+  }
+  int length = 0;
+  const char *ch = str;
+  while (*ch != '\0') {
+    length++;
+    ch++;
+  }
+  return length;
+}
+
+/*******************************************************************/
+/* [03] String.1 : Basic                                           */
+/*******************************************************************/
+char* my_strchr(const char* str, int c)
+{
+  if (str == NULL) {
+    return NULL;
+  }
+  while (*str != '\0') {
+    if (*str == c)
+      return (char*) str;
+    str++;
+  }
+  return NULL;
+}
+
+/*******************************************************************/
 /* [01] API to check Endian                                        */
 /*******************************************************************/
 int checkEndian(void)
