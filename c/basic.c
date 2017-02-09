@@ -27,6 +27,26 @@ int main ()
 }
 
 /*******************************************************************/
+/* [01] Pointers.1 : Basic                                         */
+/*  Results :
+    ptr_ptr : 0x7fff592c        
+    *ptr_ptr: 0x7fffcdbd 
+    ptr : 0x7fffcdbd                                              */
+/*******************************************************************/
+int main () 
+{
+
+   int value1 = 10;   /* actual variable declaration */
+   int value2 = 5;
+   int *ptr = &value1;
+   int** ptr_ptr = &ptr;
+
+   printf("Printing Pointers: \n");
+   printf("ptr_ptr: %p\n", ptr_ptr);   
+   printf("*ptr_ptr: %p\n", *ptr_ptr);
+   printf("ptr: %p\n", ptr);
+}
+/*******************************************************************/
 /* [01] Pointers.2 : Basic                                         */
 /*  Results :
     strcpy( str3, str1) :  Hello
@@ -86,6 +106,93 @@ char* my_strchr(const char* str, int c)
     str++;
   }
   return NULL;
+}
+
+/*******************************************************************/
+/* [03] String : Substring Check                                   */
+/*******************************************************************/
+char* my_strstr(const char* heystack, const char* needle)
+{
+  if (heystack == NULL || needle == NULL) {
+    return NULL;
+  }
+  while (*heystack != '\0') { 
+    if (*heystack == *needle) {
+      {
+        const char* h = heystack;      
+        const char* n = needle;
+      }
+      while (*n != '\0' && *h == *n) {
+        h++;
+        n++
+      }
+      if (*n == '\0') {
+        return (char*) heystack;
+      }
+    }
+    heystack++;
+  }
+  return NULL:
+}
+
+/*******************************************************************/
+/* [03] String : Compare Two Strings                              */
+/*******************************************************************/
+int my_strcmp(const char* str1, const char* str2)
+{
+  if (str1 == NULL && str2 == NULL) {
+    return 0;
+  }
+
+  if (str1 == NULL) {
+    return 0 - *str2;
+  }
+
+  if (str2 == NULL) {
+    return *str1;
+  }
+
+
+  const char* ch1 = str1;
+  const char* ch2 = str2;
+
+  while (*ch1 != '\0' && *ch2 != '\0') {
+    if (*ch1 != *ch2) {
+      return *ch1 -*ch2;
+    }
+    ch1++;
+    ch2++;
+  }
+
+  if (*ch1 == '\0' && *ch2 != '\0') {
+    return 0 - *ch2;
+  }
+  if (*ch1 != '\0' && *ch2 == '\0') {
+    return *ch1;
+  }
+  return 0;
+}
+
+/*******************************************************************/
+/* [03] String : String Concatanation                              */
+/*******************************************************************/
+int my_strcat(char* dest, char* src)
+{
+  if (dest == NULL || src== NULL) {
+    return dest;
+  }
+
+  char* d =dest;
+  while (*d != '\0') {
+    d++;
+  }
+  while (*src != '\0') {
+    *d = *src;
+    d++;
+    src++
+  }
+  *d = '\0';
+  return dest;
 }
 
 /*******************************************************************/
