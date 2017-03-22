@@ -1,10 +1,10 @@
 ##########################################################################
 # Bourne Shell : Set up basic Environment                                #
-#                 : January, 03 2017    modified by Jong K Lee          #
+#                 : March, 23 2017    modified by Jong K Lee             #
 # Project         : My Development Environment                           #
 ########################################################################## 
-#  MY Development Environment : 01/03/2017 by Jongky Lee                 #
-#   1. Notebook HOST :                                                   #
+#  MY Development Environment : 03/23/2017 by Jongky Lee                 #
+#   1. MacBook HOST  :                                                   #
 #   2. UBUNTU LINUX Server :                                             #
 ########################################################################## 
 
@@ -25,7 +25,7 @@ typeset PS1='[\@:\W] '
 #typeset PS1='[\@:\W\$] '
 LOGNAME=`/usr/bin/whoami`
 HOSTNAME=`hostname`
-typeset PS1='[$HOSTNAME:$PWD] '
+typeset PS1='[$PWD] '
 # typeset PS1='[${PWD}] '
 # typeset PS1='[\@:${PWD}] '
 
@@ -52,11 +52,7 @@ alias  la="ls -aF"
 alias  h=history
 alias  ns="netstat -nat | grep 27017"
 alias  nsc="netstat -nat | grep 27017 | wc -l"
-alias  ns7999="netstat -nat | grep 7999"
-alias  nsp='nslookup wwwgate0.mot.com'
-alias  nss='nslookup netvision.sj.symbol.com'
-alias  cpr='cd /etc; sudo cp $JK_BU/conf/resolv.conf .'
-alias  pass='/mnt/ssd/my_backup/password/passwd_gen'	
+
 
 #========================================================================
 # 1.2  JK Test Server IP Address Environemnt
@@ -77,6 +73,7 @@ export JK_WIOSIOS_FTP=10.254.160.25
 # Userid= www, password = apache, Images/WiNG5.4.0.0)
 
 export JK_NUXI=192.168.0.1
+export JK_HOME_LINUX=192.168.1.64
 export JK_VX=157.235.91.210
 export JK_RFS=192.168.0.146
 export JK_NUXI_AP1=192.168.0.148
@@ -161,12 +158,14 @@ alias mongochef="/mnt/ssd/my_backup/tools/mongochef-4.3.0-linux-x64-dist/bin/mon
 # 3.1  Common Basic JK-Linux Aliases
 #====================================================================================*
 
-alias  vp="cd $HOME;vi .bashrc"
-export JK_BASH=/mnt/ssd/my_backup/my_devel/bash/bash_jk-wios
-export JK_BASH_DIR=/mnt/ssd/my_backup/my_devel/bash/
-alias cdjsh="cd $JK_BASH_DIR"
+#export MY_HOME=/mnt/ssd/my_backup/
+export MY_HOME=$HOME
+export JK_BASH=$MY_HOME/myGit/my_devel/bash/bash_jk-wios
+alias  vp="vi $JK_BASH"
+export JK_BASH_DIR=$MY_HOME/myGit/my_devel/bash/
 alias cdbash="cd $JK_BASH_DIR"
-alias  rp="export JK_WIOS=/home/jongky/wios; cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile"
+alias  rp="cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile"
+
 alias  rpvm="cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile"
 alias  rpw="export JK_WIOS=/mnt/ssd/wios; cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile; cdw"
 alias  cdsh="cd $HOME; cd util/bash"
@@ -450,11 +449,12 @@ alias  px="ping $JK_NUXI"
 alias  pnuxi="ping $JK_NUXI"
 alias  pvm="ping $JK_VM_CLOUD"
 alias  pubuntu="ping $JK_UBUNTU"
-alias  ssha="ssh admin@$JK_NUXI"
+alias  ssha="ssh admin@$JK_LINUX"
 alias  sshx="ssh admin@$JK_NUXI"
 alias  sshxr="ssh root@$JK_NUXI"
 alias  sshvx="ssh admin@$JK_VX"
 alias  sshvxr="ssh root@$JK_VX"
+alias  sshh="ssh jongky@$JK_HOME_LINUX"
 alias  sshvm="ssh jongky@$JK_VM_CLOUD"
 alias  sshvm2="ssh jongky@$JK_VM_CLOUD2"
 alias  sshvmq="ssh symbol@$QA_VM_CLOUD"
@@ -492,11 +492,11 @@ alias  sshapp="sshpass -p motorola ssh admin@$MY_AP"
 alias  wgetcc="cdapcc; rm -rf rs_shell.pyo; wget http://157.235.91.230/rs_shell.pyo"
 
 #====================================================================================*
-# 3.9  Alias for Accessing WingCloud HotFix AMAZON Servers
+# 3.9  Alias for GIT Use
 #====================================================================================*
-alias  sshhotfix1="ssh -i /mnt/ssd/my_backup/wingcloud/wingcloud.pem ubuntu@ec2-54-255-218-139.ap-southeast-1.compute.amazonaws.com"
-alias  sshhotfix2="ssh -i /mnt/ssd/my_backup/wingcloud/wingcloud.pem ubuntu@ec2-54-251-165-139.ap-southeast-1.compute.amazonaws.com"
-
+alias  gc-devel="git clone https://github.com/jongky/my_devel.git"
+alias  gc-proj="git clone https://github.com/jongky/my_proj.git"
+alias  gpush="git push -u origin master"
 
 #====================================================================================*
 # 3.10  Alias for Accessing Linux Utility
