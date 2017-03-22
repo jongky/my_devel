@@ -114,7 +114,7 @@ export JK_SSD=/mnt/ssd
 export JK_BU=/mnt/ssd/my_backup/
 #export JK_BU=$HOME/my_backup/
 export JK_JIRA=/mnt/ssd/my_backup/JIRA
-export JK_MYCODE=/mnt/ssd/my_backup/my_devel
+export JK_MYCODE=$HOME/myGit
 export JK_BW=$JK_BU/wios
 export JK_LOG=$JK_BU/log
 export JK_VMLOG=/var/log/wingcloud
@@ -158,12 +158,18 @@ alias mongochef="/mnt/ssd/my_backup/tools/mongochef-4.3.0-linux-x64-dist/bin/mon
 # 3.1  Common Basic JK-Linux Aliases
 #====================================================================================*
 
-#export MY_HOME=/mnt/ssd/my_backup/
 export MY_HOME=$HOME
+export MY_DEVEL=$MY_HOME/myGit/my_devel
+export MY_PROJ=$MY_HOME/myGit/my_proj
+export MY_CLOUD=$MY_HOME/myGit/my_cloud
 export JK_BASH=$MY_HOME/myGit/my_devel/bash/bash_jk-wios
 alias  vp="vi $JK_BASH"
 export JK_BASH_DIR=$MY_HOME/myGit/my_devel/bash/
-alias cdbash="cd $JK_BASH_DIR"
+
+alias  cdbash="cd $JK_BASH_DIR"
+alias  cdmyp="cd $MY_PROJ"
+alias  cdmyd="cd $MY_DEVEL"
+alias  cdmyc="cd $MY_CLOUD"
 alias  rp="cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile"
 
 alias  rpvm="cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile"
