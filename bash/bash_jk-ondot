@@ -1,0 +1,796 @@
+##########################################################################
+# Bourne Shell : Set up basic Environment                                #
+#                 : April, 13 2017    modified by Jong K Lee             #
+# Project         : My Development Environment                           #
+########################################################################## 
+#  MY Development Environment : 04/13/2017 by Jongky Lee                 #
+#   1. MacBook HOST  :                                                   #
+#   2. UBUNTU LINUX Server :                                             #
+########################################################################## 
+
+#####################################################################################
+# 1.  Linux Bourne Shell General Environemnt
+#####################################################################################
+umask 000   # share mode
+#umask 077 # hide all
+
+# stty  sane
+# stty  echoe
+# stty  erase ^H
+# stty  -istrip
+# stty cs8 -istrip defeucw
+set   filec
+
+typeset PS1='[\@:\W] '
+#typeset PS1='[\@:\W\$] '
+LOGNAME=`/usr/bin/whoami`
+HOSTNAME=`hostname`
+typeset PS1='[$PWD] '
+# typeset PS1='[${PWD}] '
+# typeset PS1='[\@:${PWD}] '
+
+PATH=$PATH:/usr/local/bin/:/bin/:/usr/bin/:/sbin:/usr/sbin/:/opt/ondot/current/usr/local/bin:
+# PATH=$PATH:/usr/local/bin/:/bin/:/usr/bin/:/sbin:/usr/sbin/:/opt/wios/Sencha-5.0.1.231/5.0.1.231/:
+export PATH
+
+
+#========================================================================
+# 1.1  Alias for Common Linux Utility
+#========================================================================
+alias  a="alias"
+alias  psm="ps -ef |more"
+alias  psdb="ps -ef |grep oninit"
+alias  rc="source ~/.bash_profile"
+alias  vrc="vi ~/.bash_profile"
+alias  c=clear
+alias  rm="rm -i"
+alias  del="\rm"
+alias  lt="ls -aFlt --color=auto --show-control-char"
+alias  dir="ls -aFl |grep \"^d\"; echo rp\"directory only\""
+alias  ll="ls -aFl"
+alias  l="ls -F"
+alias  la="ls -aF"
+alias  h=history
+
+
+#========================================================================
+# 1.2  JK Test Server IP Address Environemnt
+#========================================================================
+export JK_ONDOT_VM1=192.168.131.51
+export JK_ONDOT_VM2=192.168.131.56
+
+#####################################################################################
+# 2.  My Package Environment Variables
+#####################################################################################
+export JK_MYCODE=$HOME/myGit
+alias  cdver="cd ${JK_VER}"
+alias  cdmy="cd ${JK_MYCODE}; pwd; ls -al"
+alias  cdpy="cd ${JK_MYCODE}/python; pwd; ls -al" 
+
+#####################################################################################
+# 3.  Alias for Z Source Tree Environment Variables
+#####################################################################################
+
+#====================================================================================*
+# 3.1  Common Basic JK-Linux Aliases
+#====================================================================================*
+# export MY_HOME=/root
+if [ $LOGNAME == 'jonglee' ]; then export MY_HOME=$HOME; else export MY_HOME=/root; fi
+
+export MY_DEVEL=$MY_HOME/myGit/my_devel
+export MY_PROJ=$MY_HOME/myGit/my_proj
+export JK_BASH=$MY_HOME/myGit/my_devel/bash/bash_jk-ondot
+alias  vp="vi $JK_BASH"
+export JK_BASH_DIR=$MY_HOME/myGit/my_devel/bash/
+
+alias  cdbash="cd $JK_BASH_DIR"
+alias  cdsh="cd $HOME; cd util/bash"
+alias  rp="cd $HOME; cp $JK_BASH .bashrc;. .bashrc; cp .bashrc .bash_profile"
+
+#====================================================================================*
+# 3.2  : Common : wios, wingcloud : BUILD Environment Variables
+#====================================================================================*
+alias  cdw="cd ${JK_WIOS}"
+alias  cdwc="cd ${JK_WIOSC}"
+alias  cdsrc="cd ${JK_SRC}"
+alias  cdinc="cd ${JK_INC}"
+
+
+#====================================================================================*
+# 3.3  : OnDot Aliases : svn (Sub Version) for WiOS (Z) : /opt/ondot
+#====================================================================================*
+export JK_WIOS=$HOME/trunk
+export JK_ONDOT=/opt/ondot
+export JK_ONDOT_INIT=/opt/ondot/current/etc/init.d
+export JK_LOG=$JK_ONDOT/current/var/log/ondot
+export JK_SRC=$JK_WIOS/src
+export JK_INC=$JK_WIOS/src/inc
+export JK_ONDOT_PLATFORM=/root/trunk/src/upgrade/opt/ondot/version
+export JK_ONDOT_RABBITMQ=/opt/ondot/current/etc/rabbitmq
+export JK_ONDOT_SBIN=/root/trunk/src/upgrade/opt/ondot/version/rpm-system/sbin
+
+alias  cdlog="cd ${JK_LOG}; pwd; ls -al"
+alias  cdon="cd ${JK_ONDOT}/current/"
+alias  ostart="ondot-start-services"
+alias  ostop="ondot-stop-services"
+alias  ostat="ondot-status"
+alias  pson="ps -aef | grep ondot"
+alias  psfi="ps -aef | grep fiserver"
+alias  re="source $JK_ONDOT_INIT/resources"
+alias  cdp="cd ${JK_ONDOT_PLATFORM}"
+alias  cdw="cd ${JK_ONDOT_PLATFORM}"
+alias  cdver="cd ${JK_ONDOT_PLATFORM}"
+alias  cdbin="cd ${JK_ONDOT_SBIN}"
+alias  cdra="cd ${JK_ONDOT_RABBITMQ}"
+
+#====================================================================================*
+# 3.4  : OnDot Platform : /opt/ondot
+#====================================================================================*
+export ONDOT_ROOT_DIR=/opt/ondot
+export ONDOT_CURRENT_DIR=${ONDOT_ROOT_DIR}/current
+export ONDOT_CURRENT_USR_DIR=${ONDOT_CURRENT_DIR}/usr
+export ONDOT_CURRENT_USR_LOCAL_DIR=${ONDOT_CURRENT_USR_DIR}/local
+export ONDOT_CURRENT_USR_LOCAL_LIBEXEC_DIR=${ONDOT_CURRENT_USR_LOCAL_DIR}/libexec
+export ONDOT_CURRENT_USR_LOCAL_LIBEXEC_ONDOT_DIR=${ONDOT_CURRENT_USR_LOCAL_LIBEXEC_DIR}/ondot
+export ONDOT_SET_DIRS_SCRIPT=${ONDOT_CURRENT_USR_LOCAL_LIBEXEC_ONDOT_DIR}/ondot-set-dirs-files
+
+alias  cdusr="cd ${ONDOT_CURRENT_USR_DIR}"
+alias  cdetc="cd ${ONDOT_CURRENT_DIR}/etc"
+alias  cdlocal="cd ${ONDOT_CURRENT_USR_LOCAL_DIR}"
+alias  cdlib="cd ${ONDOT_CURRENT_USR_LOCAL_LIBEXEC_DIR}"
+alias  cdons="cd ${ONDOT_CURRENT_USR_LOCAL_LIBEXEC_DIR}/ondot"
+alias  cdos="cd ${ONDOT_CURRENT_USR_LOCAL_LIBEXEC_DIR}/ondot"
+
+
+#====================================================================================*
+# 3.5  : SVN, Compile Aliases : svn (Sub Version) for WiOS (ZEBRA)
+#====================================================================================*
+
+
+#====================================================================================*
+# 3.6  Additional Developer Aliases : WingCloud start/stop for wios (ZEBRA)
+#====================================================================================*
+
+
+#====================================================================================*
+# 3.4  TAIL Aliases : Handling Mart_server 
+#====================================================================================*
+
+
+
+#====================================================================================*
+# 3.8  Alias for Accessing My Setup(VM)
+#====================================================================================*
+alias  mini="sudo minicom"
+alias  ssh1="ssh root@$JK_ONDOT_VM1"
+alias  ssh2="ssh root@$JK_ONDOT_VM2"
+
+#====================================================================================*
+# 3.9  Alias for GIT Use
+#====================================================================================*
+alias  gc-devel="git clone https://github.com/jongky/my_devel.git"
+alias  gc-proj="git clone https://github.com/jongky/my_proj.git"
+alias  gpush="git push -u origin master"
+
+#====================================================================================*
+# 3.10  Alias for Accessing Linux Utility
+#====================================================================================*
+alias  chknetstat="while sleep 3; do netstat -nat | grep 80; echo ; done"
+alias  mksh="cd /etc; sudo rm -rf sh; sudo ln -s bash sh"
+alias  npmp="npm config set proxy http://wwwgate0.mot.com:1080; npm config set https-proxy http://wwwgate0.mot.com:1080"
+
+
+#####################################################################################
+# 4.  Utility Functions for Easy Use          
+#####################################################################################
+
+#====================================================================================*
+# 4.1  Prompt() 
+# usage prompt message
+# Result is in INPUT
+#====================================================================================*
+prompt()
+{
+    while true
+    do
+        echo -n "$1, or q to quit: "
+        read -e INPUT
+        [ "$INPUT" ] || continue
+        echo $INPUT | grep '^[qQ]$' >/dev/null 2>&1 && {
+            [ "$2" = "noq" ] && {
+                return 1
+            }
+            exit 0
+        }
+        echo $INPUT | grep '^[qQ][uU][iI][tT]$' >/dev/null 2>&1 && {
+            [ "$2" = "noq" ] && {
+                return 1
+            }
+            exit 0
+        }
+        return 0
+    done
+}
+
+#====================================================================================*
+# 4.2  Promptyn() 
+# usage promptyn message noq
+# $1 message to prompt
+# $2 no here is equivalent to quit so only print y/n
+#====================================================================================*
+promptyn()
+{
+    [ "$NOPROMPT" ] && {
+        return 0
+    }
+    postfix="[yes/no/quit]?:"
+    [ "$2" = "noq" ] && {
+        postfix="[yes/no]?:"
+    }
+    while true
+    do
+        echo -n "$1 $postfix "
+        read -e INPUT
+        echo $INPUT | grep '^[yY]$' >/dev/null 2>&1 && return 0
+        echo $INPUT | grep '^[yY][eE][sS]$' >/dev/null 2>&1 && return 0
+        echo $INPUT | grep '^[nN]$' >/dev/null 2>&1 && return 1
+        echo $INPUT | grep '^[nN][oO]$' >/dev/null 2>&1 && return 1
+        echo $INPUT | grep '^[qQ]$' >/dev/null 2>&1 && {
+            promptq && return 1;
+            exit 0
+        }
+        echo $INPUT | grep '^[qQ][uU][iI][tT]$' >/dev/null 2>&1 && {
+            promptq && return 1;
+            exit 0
+        }
+        echo "Error: Unrecognized input $INPUT"
+        echo
+    done
+}
+
+#####################################################################################
+# 5.  Utility Functions for Branching & Syncing.........
+#####################################################################################
+#--------------------------------------------------------------------
+# 5.1 : Script to clone any branch to destination branch
+#--------------------------------------------------------------------
+gc()    
+{
+    echo "[GIT-Clone] This scrip is cloning [WC-$2] from git [dev/WC-$1]…." 
+    cdm
+    alias cdcm="cd $WORK"
+    git checkout -b dev/WC-$2
+    echo "[GIT-Clone] Clone [WC-$2] is done from git…." 
+}
+
+#====================================================================================*
+# 5.2  Set Branch Functions from git force
+#====================================================================================*
+setbr()
+{
+    echo "## This will checkout the Working Branch !!!!"
+    prompt "Enter Branch Name >> "
+    BRANCH=$INPUT
+    export JK_WIOS=$HOME/$BRANCH
+    unalias cdm
+    alias cdm="cd $W"
+    echo ">> Checkouted branch is now $BRANCH ========> !!!!"
+}
+
+#====================================================================================*
+# 5.3 Set Branch <origin/develop> 
+#====================================================================================*
+setdevel()
+{
+    echo "## This will set GIT Branch to <origin/develop> !!!!"
+    BRANCH=develop
+    cd /Users/jongkylee/acc-depot/devel/cm
+    git checkout develop
+    export WC=/Users/jongkylee/Documents/Source/$BRANCH
+    export WORK=/Users/jongkylee/acc-depot/devel/cm
+    unalias cdcm
+    alias cdcm="cd $WORK"
+    echo ">> Checkouted GIT branch is now $BRANCH ========> !!!!"
+}    
+
+#--------------------------------------------------------------------
+# 5.4 : Script to search file         
+#--------------------------------------------------------------------
+fs()
+{
+   find . -name $1 -print
+}
+
+#--------------------------------------------------------------------
+# 5.5 : Script to search file         
+#--------------------------------------------------------------------
+fsscr()
+{
+   echo "cdscr1"
+   cdscr1
+   find . -name $1 -print
+   echo "cdscr2"
+   cdscr2
+   find . -name $1 -print
+   echo "cdscr3"
+   cdscr3
+   find . -name $1 -print
+   echo "cdscr4"
+   cdscr4
+   find . -name $1 -print
+}
+
+#--------------------------------------------------------------------
+# 5.6 : Script to search text in all files under the folder trees        
+#--------------------------------------------------------------------
+tsa()
+{
+  grep -lR --exclude=app.js $1 *
+}
+ts()
+{
+  grep -R $1 *
+}
+
+#--------------------------------------------------------------------
+# 5.7 : Script to search text in *.c files         
+#--------------------------------------------------------------------
+tsc()
+{
+   for file in $( find $directory -type f -name '*.c' | sort )
+   do
+       strings -f $file | grep $1
+   done
+}
+
+#--------------------------------------------------------------------
+# 5.8 : Script to search text in *.cpp files         
+#--------------------------------------------------------------------
+tscpp()
+{
+   for file in $( find $directory -type f -name '*.cpp' | sort )
+   do
+       strings -f $file | grep $1
+   done
+}
+
+#--------------------------------------------------------------------
+# 5.9 : Script to search text in *.h files         
+#--------------------------------------------------------------------
+tsh()
+{
+   for file in $( find $directory -type f -name '*.h' | sort )
+   do
+       strings -f $file | grep $1
+   done
+}
+
+#--------------------------------------------------------------------
+# 5.10 : Script to search  file         
+#--------------------------------------------------------------------
+ttshow()
+{
+   if [ -z $DISPLAY ]; then
+   echo "ESC]0; $* ^G"
+   fi
+}
+
+
+#####################################################################################
+# 9.  Macro Aliases
+#####################################################################################
+#--------------------------------------------------------------------
+# 9.1 : Script to find process  
+#--------------------------------------------------------------------
+gp()    
+{
+   ps -ef |grep $1
+}
+
+#--------------------------------------------------------------------
+# 9.2 : Script to search Size
+#--------------------------------------------------------------------
+findsz()
+{
+    # if [[ ! -z $# ]]
+    if [ $# -eq 1 ]
+    then 	find . -size $1 -print
+    else	echo "Usage : findsz +1000000c    // => gt 100Mb "
+    fi
+}
+
+#--------------------------------------------------------------------
+# 9.3 : Script to search Error Code        
+#--------------------------------------------------------------------
+gerr() 
+{
+    grep $1 /usr/include/sys/errno.h
+}
+
+#--------------------------------------------------------------------
+# 9.4 : Script to search Signal
+#--------------------------------------------------------------------
+gsig() 
+{
+    grep $1 /usr/include/sys/iso/signal_iso.h
+}
+
+#--------------------------------------------------------------------
+# 9.5 : Script to run snmpwalk fiese         
+#--------------------------------------------------------------------
+run-snmpwalk()
+{
+    while true
+    do
+        echo "#########################################################################"
+        echo "#   snmpwalk -v2c -c public -t 10 172.29.0.137 enterprises.15983  "
+        echo "#########################################################################"
+        snmpwalk -v2c -c public -t 1000 172.29.0.137 enterprises.15983
+        echo -n 
+        sleep 5
+    done
+}
+
+
+#####################################################################################
+# 10.  Macro Aliases for ZEBRA Devices
+#####################################################################################
+#--------------------------------------------------------------------
+# 10.1 : Script to or from SCP file from My Linux BOX
+#--------------------------------------------------------------------
+sett()
+{
+    echo "#########################################################################"
+    echo "#   Setup JK_TARGET Machine to SCP or FTP : "
+    echo "#########################################################################"
+    echo ""
+    echo "[1]  My Devel Linux Server   :   157.235.91.82"
+    echo "[2]  My VM Cloud    Server   :   157.235.91.136"
+    echo "[3]  My Cloud Test  AP1      :   157.235.91.98"
+    echo "[4]  My Cloud Test  AP2      :   157.235.91.37"
+    echo ""
+    echo "[5]  My NUXI-NX9500 Server   :   192.168.0.1"
+    echo "[6]  My VX9000 NOC Server    :   192.168.0.145"
+    echo "[7]  My RFS-4000 Controller  :   192.168.0.146"
+    echo "[8]  Pinnacl Test AP1-7530   :   192.168.0.150"
+    echo "[9]  Pinnacl Test AP2-7522   :   192.168.0.147"
+    echo "----------------------------------------------------------------------"    
+    prompt "Enter Number to set JK_TARGET Machine ===>> "
+    JK_TARGET_NUM=$INPUT
+
+    case "$JK_TARGET_NUM" in
+
+        1)
+        JK_TARGET=$JK_LINUX
+        ;;
+
+        2)
+        JK_TARGET=$JK_VM_CLOUD
+        ;;
+
+        3)
+        JK_TARGET=$JK_CLOUD_AP1
+        ;;
+
+        4)
+        JK_TARGET=$JK_CLOUD_AP2
+        ;;
+
+        5)
+        JK_TARGET=$JK_NUXI
+        ;;
+
+        6)
+        JK_TARGET=$JK_VX
+        ;;
+
+        7)
+        JK_TARGET=$JK_RFS
+        ;;
+
+        8)
+        JK_TARGET=$JK_NUXI_AP1
+        ;;
+
+        9)
+        JK_TARGET=$JK_NUXI_AP2
+        ;;
+
+        *)
+        echo $"Usage: 1 -- 9"
+        ;;
+    esac
+    echo "@@@ ===> JK_TARGET Machine will be IP Address of [$JK_TARGET] !!!!"  
+}
+
+scptr()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_TARGET:$2"
+    scp $1 root@$JK_TARGET:$2
+}
+
+scpt()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_TARGET:$2"
+    scp $1 jongky@$JK_TARGET:$2
+}
+
+scplog()    
+{
+    prompt ">> Enter DNS Name of Server what you want to scp ==> "
+    ServerID=$INPUT
+    prompt ">> Enter File Name to copy from ==> "
+    FileName=$INPUT
+
+    echo ""
+    echo " << You selected Server : [$ServerID], File : [$FileName] "
+    echo ""
+    scp aa@$ServerID:/opt/cm/var/log/celery/$FileName .
+}
+
+scpli()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_LINUX~jongky/backup/log]…."
+    scp $1 jongky@$JK_LINUX:~jongky/backup/log 
+}
+
+scpx()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_NUXI/usr/scripts/mart]…."
+    scp $1 root@$JK_NUXI:/usr/scripts/mart 
+}
+
+scpxc()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_NUXI/usr/lib/python2.7/site-packages/cfgd/]…."
+    scp $1 root@$JK_NUXI:/usr/lib/python2.7/site-packages/cfgd/
+}
+
+scpxcc()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_NUXI/usr/lib/python2.7/site-packages/cfgd/core/]…."
+    scp $1 admin@$JK_NUXI:/usr/lib/python2.7/site-packages/cfgd/core 
+}
+
+scpvxc()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_VX/usr/lib/python2.7/site-packages/cfgd/]…."
+    scp $1 root@$JK_VX:/usr/lib/python2.7/site-packages/cfgd/
+}
+
+scpvxcfg()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_VX/usr/lib/python2.7/site-packages/cfgd/]…."
+    scp -r cfgd root@$JK_VX:/usr/lib/python2.7/site-packages/
+}
+
+scpvxcc()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_VX/usr/lib/python2.7/site-packages/cfgd/core/]…."
+    scp $1 root@$JK_VX:/usr/lib/python2.7/site-packages/cfgd/core 
+}
+
+scpvxcr()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_VX/usr/lib/python2.7/site-packages/cfgd/remote_debug]…."
+    cd /home/jongky/wios_58pinacle/out/nuxi-guest/root/usr/lib/python2.7/site-packages/cfgd/remote_debug
+    scp $1 root@$JK_VX:/usr/lib/python2.7/site-packages/cfgd/remote_debug 
+}
+
+scpxr()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_NUXI/usr/lib/python2.7/site-packages/cfgd/remote_debug/]…."
+    scp $1 admin@$JK_NUXI:/usr/lib/python2.7/site-packages/cfgd/remote_debug 
+}
+
+scpapc()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $MY_AP/usr/lib/python2.7/site-packages/cfgd/core/]…."
+    scp $1 root@$MY_AP:/usr/lib/python2.7/site-packages/cfgd/core/
+}
+
+scpapssm()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $MY_AP/]…."
+    scp $1 root@$MY_AP:/usr/sbin/
+}
+
+scpxa()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_NUXI/usr/scripts/mart/alarm]…."
+    scp $1 root@$JK_NUXI:/usr/scripts/mart/alarm
+}
+
+scpalmd()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_NUXI/usr/lib/python2.7/site-packages/alarmd]…."
+    scp $1 root@$JK_NUXI:/usr/lib/python2.7/site-packages/alarmd
+}
+
+scpd()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_VM_CLOUD~jongky/my_backup/data]…."
+    scp $1 jongky@$JK_VM_CLOUD:~jongky/my_backup/data 
+}
+
+scpu()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_UBUNTU~jongky/my_backup/data]…."
+    scp $1 jongky@$JK_UBUNTU:~jongky/my_backup/data 
+}
+
+scpvm()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_WING/wingcloud/usr/scripts/mart]…."
+    scp $1 jongky@$JK_WING:/wingcloud/usr/scripts/mart 
+}
+
+scpvmrs()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_WING/wingcloud/cloudcfg/node_modules/dashboard_server/remote_shell]…."
+    scp $1 jongky@$JK_WING://wingcloud/cloudcfg/node_modules/dashboard_server/remote_shell/
+}
+
+scpvmdsr()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_WING//wingcloud/cloudcfg/node_modules/dashboard_server/remote_shell/]…."
+    scp $1 jongky@$JK_WING://wingcloud/cloudcfg/node_modules/dashboard_server/remote_shell/
+}
+
+scpvmcu()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_WING//wingcloud/cloudcfg/node_modules/cloud_utils]…."
+    scp $1 jongky@$JK_WING://wingcloud/cloudcfg/node_modules/cloud_utils/
+}
+
+scpapc2r()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_CLOUD_AP2/usr/lib/python2.7/site-packages/cfgd/remote_debug/]…."
+    scp $1 root@$JK_CLOUD_AP2:/usr/lib/python2.7/site-packages/cfgd/remote_debug 
+}
+
+scpapc2cc()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_CLOUD_AP2/usr/lib/python2.7/site-packages/cfgd/cloud_client/]…."
+    cd /mnt/ssd/wios_sprint18/out/birch/root/usr/lib/python2.7/site-packages/cfgd/cloud_client
+    scp $1 root@$JK_CLOUD_AP2:/usr/lib/python2.7/site-packages/cfgd/cloud_client 
+}
+
+
+scpvmd()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_WING~jongky/my_backup/data]…."
+    scp $1 jongky@$JK_WING:~jongky/temp
+}
+
+scpvmd2()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_WING~jongky/my_backup/data]…."
+    scp $1 jongky@$JK_VM_CLOUD2:~jongky/temp
+}
+
+scpsim()    
+{
+    echo "[Warning—] This file[$1] is being copied[SCP] to $JK_MARTSIM:~labuser]…."
+    scp $1 labuser@$JK_MARTSIM:~labuser/ 
+}
+
+#--------------------------------------------------------------------
+# 10.4 : Script to check Python Syntax
+#--------------------------------------------------------------------
+pcom()    
+{
+    echo "[DEBUG] This file checks the syntax of Python….(python -m py_compilf) " 
+    python -m py_compile $1
+}
+
+#--------------------------------------------------------------------
+# 10.5 : Script to forward SSH Key Python Syntax
+#--------------------------------------------------------------------
+sshvm1()    
+{
+    echo "[DEBUG] This forward SSH key….(ssh -o ForwardAgent=yes lab@l2) " 
+    eval "$(ssh-agent -s)"
+    ssh-add
+    sshvm
+}
+
+#--------------------------------------------------------------------
+# 10.6 : Script to run SSH to My VM Cloud
+#--------------------------------------------------------------------
+scpssh()    
+{
+    echo "[DEBUG] This will open SSH with SSH key…."
+
+    ssh -o ForwardAgent=yes $1
+}
+
+
+#--------------------------------------------------------------------
+# 10.6 : Script to run svnmerge from cedar trunk branch
+#--------------------------------------------------------------------
+svnr()
+{
+    echo "[Warning—] This file[$1] is being marked as resolved.."
+    svn resolved $1
+}
+
+svnm()
+{
+    echo "[Warning—] This revision[$1] is being merged from netvision.sj.symbol.com/wios/branches2/rel583_poc/..."
+    tools/bin/svnmerge.py merge -r$1 -S svn://netvision.sj.symbol.com/wios/branches2/rel583_poc
+	#tools/bin/svnmerge.py merge -r$1 -S svn://netvision.sj.symbol.com/wios/branches2/rel58_cedar      
+}
+
+svnm_csl()
+{
+    echo "[Warning—] This revision[$1] is being merged from netvision.sj.symbol.com/wios/branches2/cloud_service_live/..."
+    tools/bin/svnmerge.py merge -r$1 -S svn://netvision.sj.symbol.com/wios/branches2/cloud_service_live
+	#tools/bin/svnmerge.py merge -r$1 -S svn://netvision.sj.symbol.com/wios/branches2/cloud_service_live      
+}
+svnm_poc()
+{
+    echo "[Warning—] This revision[$1] is being merged from netvision.sj.symbol.com/wios/branches2/rel583_poc/..."
+    tools/bin/svnmerge.py merge -r$1 -S svn://netvision.sj.symbol.com/wios/branches2/rel583_poc
+	#tools/bin/svnmerge.py merge -r$1 -S svn://netvision.sj.symbol.com/wios/branches2/rel583_poc      
+}
+
+svn_record()
+{
+    echo "[Warning—] This revision[$1] is being marked manual merge from netvision.sj.symbol.com/wios/branches2/rel583_poc/..."
+	tools/bin/svnmerge.py merge -r$1 -S branches2/rel58_cedar --record-only
+}
+
+
+
+
+#--------------------------------------------------------------------
+# 10.7 : Script to run svnmerge from pinnacles branch
+#--------------------------------------------------------------------
+svnmp()
+{
+    echo "[Warning—] This revision[$1] is being merged to /branches2/rel58_pinnacles...."
+    tools/bin/svnmerge.py merge -r$1 -S svn://netvision.sj.symbol.com/wios/branches2/rel58_pinnacles 
+}
+
+#--------------------------------------------------------------------
+# 10.8 : Script to run BUILD at night time
+#--------------------------------------------------------------------
+runcmd()
+{
+    echo "[Warning—] This command[$1] will be running in [$2] Minutes."
+    sleep "$(($2 * 60))"
+    $1
+}
+
+
+
+#####################################################################################
+# 11.  TIPs to resolve few  ZEBRA issues
+#####################################################################################
+#--------------------------------------------------------------------
+# 11.1 : Need to upgarde gcc/g++ to 4.8.5 to build node-4.2.2
+#--------------------------------------------------------------------
+# 1. Use "gcc-4.8.5.tar.bz2" from "wios/tools/gcc-glibc"
+#    1.> bz2 --> tar -> ./configure -> make --> sudo make install
+
+
+####################################################################
+# End of Bourne Shell 
+####################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
